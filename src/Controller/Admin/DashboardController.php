@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Informe;
+use App\Entity\Item;
+use App\Entity\Localidad;
+use App\Entity\Provincia;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -16,9 +19,15 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 class DashboardController extends AbstractDashboardController
 {
+    
     #[Route('/admin', name: 'admin')]
+    
     public function index(): Response
     {
+
+       
+
+        $this->configureMenuItems();
         // return parent::index();
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
@@ -48,8 +57,20 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::section("Entidades");
         yield MenuItem::linkToCrud('Usuario', 'fa fa-list',Usuario::class);
         yield MenuItem::linkToCrud('Informe', 'fa fa-list',Informe::class);
+        yield MenuItem::linkToCrud('Item', 'fa fa-list',Item::class);
+
+
+        // yield MenuItem::section("Provincia");
+        yield MenuItem::linkToCrud('Provincia', 'fa fa-list',Provincia::class);
+        yield MenuItem::linkToCrud('Localidad', 'fa fa-list',Localidad::class);
+
+        yield MenuItem::section("Formularios");
+        yield MenuItem::linkToRoute('Formulario item', 'fa fa-th-list',"creaitem");
+        yield MenuItem::linkToRoute('Formulario ruta', 'fa fa-th-list',"crearuta");
+        
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -38,11 +40,23 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
 
  
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private $foto = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'Usuario', targetEntity: Tour::class)]
+    private Collection $Tours;
+
+    #[ORM\OneToMany(mappedBy: 'Usuario', targetEntity: Reserva::class)]
+    private Collection $reservas;
+
+    public function __construct()
+    {
+        $this->Tours = new ArrayCollection();
+        $this->reservas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -78,7 +92,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -163,6 +177,66 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tour>
+     */
+    public function getTours(): Collection
+    {
+        return $this->Tours;
+    }
+
+    public function addTour(Tour $Tour): static
+    {
+        if (!$this->Tours->contains($Tour)) {
+            $this->Tours->add($Tour);
+            $Tour->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTour(Tour $Tour): static
+    {
+        if ($this->Tours->removeElement($Tour)) {
+            // set the owning side to null (unless already changed)
+            if ($Tour->getUsuario() === $this) {
+                $Tour->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reserva>
+     */
+    public function getReservas(): Collection
+    {
+        return $this->reservas;
+    }
+
+    public function addReserva(Reserva $reserva): static
+    {
+        if (!$this->reservas->contains($reserva)) {
+            $this->reservas->add($reserva);
+            $reserva->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReserva(Reserva $reserva): static
+    {
+        if ($this->reservas->removeElement($reserva)) {
+            // set the owning side to null (unless already changed)
+            if ($reserva->getUsuario() === $this) {
+                $reserva->setUsuario(null);
+            }
+        }
 
         return $this;
     }

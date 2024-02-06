@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,11 +22,22 @@ class Item
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $descripcion = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private $foto = null;
 
-    #[ORM\Column(type: Types::BLOB)]
+    #[ORM\Column(length: 255, nullable: true)]
     private $localizacion = null;
+
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    private ?Localidad $Localidad = null;
+
+    #[ORM\ManyToMany(targetEntity: Ruta::class, inversedBy: 'items')]
+    private Collection $Ruta;
+
+    public function __construct()
+    {
+        $this->Ruta = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,42 @@ class Item
     public function setLocalizacion($localizacion): static
     {
         $this->localizacion = $localizacion;
+
+        return $this;
+    }
+
+    public function getLocalidad(): ?Localidad
+    {
+        return $this->Localidad;
+    }
+
+    public function setLocalidad(?Localidad $Localidad): static
+    {
+        $this->Localidad = $Localidad;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ruta>
+     */
+    public function getRuta(): Collection
+    {
+        return $this->Ruta;
+    }
+
+    public function addRutum(Ruta $rutum): static
+    {
+        if (!$this->Ruta->contains($rutum)) {
+            $this->Ruta->add($rutum);
+        }
+
+        return $this;
+    }
+
+    public function removeRutum(Ruta $rutum): static
+    {
+        $this->Ruta->removeElement($rutum);
 
         return $this;
     }

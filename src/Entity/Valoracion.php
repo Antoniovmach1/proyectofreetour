@@ -17,10 +17,13 @@ class Valoracion
     private ?int $valoracion_guia = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $valoracion_ruta = null;
+    private ?int $valoracion_Ruta = null;
 
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $comentario = null;
+
+    #[ORM\ManyToOne(inversedBy: 'valoracions')]
+    private ?reserva $reserva = null;
 
     public function getId(): ?int
     {
@@ -41,12 +44,12 @@ class Valoracion
 
     public function getValoracionRuta(): ?int
     {
-        return $this->valoracion_ruta;
+        return $this->valoracion_Ruta;
     }
 
-    public function setValoracionRuta(?int $valoracion_ruta): static
+    public function setValoracionRuta(?int $valoracion_Ruta): static
     {
-        $this->valoracion_ruta = $valoracion_ruta;
+        $this->valoracion_Ruta = $valoracion_Ruta;
 
         return $this;
     }
@@ -59,6 +62,18 @@ class Valoracion
     public function setComentario(?string $comentario): static
     {
         $this->comentario = $comentario;
+
+        return $this;
+    }
+
+    public function getReserva(): ?reserva
+    {
+        return $this->reserva;
+    }
+
+    public function setReserva(?reserva $reserva): static
+    {
+        $this->reserva = $reserva;
 
         return $this;
     }

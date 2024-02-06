@@ -1,0 +1,96 @@
+{% include '@EasyAdmin/page/content.html.twig' %}
+
+<div id="todoitem">
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    {# asset{{()}} #}
+
+    <link rel="stylesheet" href="{{asset('plugins/tabs/mapa.css')}}" />
+    <script src="{{asset('plugins/tabs/mapa.js')}}"></script>
+
+    <script type="text/javascript" src="{{asset('plugins/drag/dist/image-uploader.min.js')}}"></script>
+    <script src="{{asset('plugins/drag/imagen.js')}}"></script>
+
+    <link rel="stylesheet" href="{{asset('plugins/drag/dist/image-uploader.min.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
+      rel="stylesheet">
+
+    <!-- Font Awesome -->
+    {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> #}
+
+    <!-- RichText CSS -->
+    <link rel="stylesheet" href="{{asset('plugins/RichText/src/richtext.min.css')}}">
+
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- RichText JS -->
+    <script type="text/javascript" src="{{asset('plugins/RichText/src/jquery.richtext.js')}}"></script>
+
+    <!-- lo mio JS -->
+    <script type="text/javascript" src="{{('plugins/RichText/richtext.js')}}"></script>
+  </head>
+  <body>
+
+    <div id="tabs" class="container mt-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link active" href="#tabs-1">Titulo y descripcion</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tabs-2">Imagenes</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tabs-3">Geolocalización</a></li>
+      </ul>
+      <div class="tab-content mt-2">
+        <div id="tabs-1" class="tab-pane active">
+          <div class="page-wrapper box-content">
+            <label for="imageTitle">Titulo:</label>
+            <input type="text" id="imageTitle">
+            <textarea class="descripcionitem" name="example"></textarea>
+          </div>
+        </div>
+        <div id="tabs-2" class="tab-pane">
+          <div class="input-field">
+            <div class="input-images-1" style="padding-top: .5rem;"></div>
+          </div>
+        </div>
+        <div id="tabs-3" class="tab-pane">
+          <label for="ini-ruta">Dirección:</label>
+          <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
+          <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
+          <div>
+            <p>Latitud: <span id="latitudIni"></span></p>
+            <p>Longitud: <span id="longitudIni"></span></p>
+          </div>
+          <div id="mapa"></div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</div>
+
+<script>
+
+$(function() {
+    
+
+        var tituloElemento = document.querySelector('.content-header-title .title');
+
+
+        tituloElemento.textContent = 'Creacion de items';
+
+
+        $(".content").append($("#todoitem"))
+        })
+
+
+    </script>
+</body>
+</div>
+

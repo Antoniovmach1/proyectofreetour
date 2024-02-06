@@ -23,6 +23,9 @@ class Informe
     #[ORM\Column]
     private ?int $recaudacion = null;
 
+    #[ORM\ManyToOne(inversedBy: 'informes')]
+    private ?Tour $Tour = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Informe
     public function setRecaudacion(int $recaudacion): static
     {
         $this->recaudacion = $recaudacion;
+
+        return $this;
+    }
+
+    public function getTour(): ?Tour
+    {
+        return $this->Tour;
+    }
+
+    public function setTour(?Tour $Tour): static
+    {
+        $this->Tour = $Tour;
 
         return $this;
     }

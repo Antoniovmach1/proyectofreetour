@@ -23,11 +23,11 @@ class SiteUpdateManager
     {
         $happyMessage = $this->messageGenerator->getHappyMessage();
 
-        $usuario=$this->entityManager->getRepository(Usuario::class)->findById(26);
+        $Usuario=$this->entityManager->getRepository(Usuario::class)->findById(26);
 
         $email = (new Email())
             ->from('admin@example.com')
-            ->to($usuario[0]->getEmail())
+            ->to($Usuario[0]->getEmail())
             ->subject('Reserva realizada!')
             ->text('La reserva '.$happyMessage.' se ha realizado correctamente');
 

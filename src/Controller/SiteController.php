@@ -25,4 +25,17 @@ class SiteController extends AbstractController
             // ... your template variables
         ]);
     }
+
+
+    #[Route('/', name:"home")]
+    public function home(): Response
+    {
+
+
+
+        return $this->render('home.html.twig', [
+           
+        ]);
+       
+    }
 }
