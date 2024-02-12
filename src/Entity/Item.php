@@ -25,14 +25,19 @@ class Item
     #[ORM\Column(length: 255, nullable: true)]
     private $foto = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private $localizacion = null;
+    
+    #[ORM\Column]
+    private array $localizacion = [];
+
+    // #[ORM\Column(length: 255, nullable: true)]
+    // private $localizacion = null;
 
     #[ORM\ManyToOne(inversedBy: 'items')]
     private ?Localidad $Localidad = null;
 
     #[ORM\ManyToMany(targetEntity: Ruta::class, inversedBy: 'items')]
     private Collection $Ruta;
+
 
     public function __construct()
     {
@@ -80,17 +85,17 @@ class Item
         return $this;
     }
 
-    public function getLocalizacion()
-    {
-        return $this->localizacion;
-    }
+    // public function getLocalizacion()
+    // {
+    //     return $this->localizacion;
+    // }
 
-    public function setLocalizacion($localizacion): static
-    {
-        $this->localizacion = $localizacion;
+    // public function setLocalizacion($localizacion): static
+    // {
+    //     $this->localizacion = $localizacion;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getLocalidad(): ?Localidad
     {
@@ -124,6 +129,18 @@ class Item
     public function removeRutum(Ruta $rutum): static
     {
         $this->Ruta->removeElement($rutum);
+
+        return $this;
+    }
+
+    public function getLocalizacion(): array
+    {
+        return $this->localizacion;
+    }
+
+    public function setLocalizacion(array $localizacion): static
+    {
+        $this->localizacion = $localizacion;
 
         return $this;
     }

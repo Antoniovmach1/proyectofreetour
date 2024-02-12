@@ -1,14 +1,24 @@
- $(function() {
-      $("#tabs").tabs({
-        activate: function(event, ui) {
-          // Inicializar el mapa cuando la pestaña "Aenean lacinia" se activa
-          if (ui.newPanel.attr('id') === 'tabs-3') {
-            initMap();
-          }
-        }
-      });
+$(function() {
+  
+    $("#botonmodal").on("click", function() {
+      $("#modalmapa").dialog("open");
+      initMap(); 
     });
-
+  
+    $("#modalmapa").dialog({
+      autoOpen: false,
+      width: 600,
+      modal: true,
+      resizable: false
+    });
+  
+    $("#tabs").tabs({
+      activate: function(event, ui) {
+        
+      }
+    });
+  });
+  
     var map; // Variable global para el objeto del mapa
     var marker; // Variable global para el marcador
 
@@ -25,6 +35,8 @@
           var clickedLat = e.latlng.lat;
           var clickedLng = e.latlng.lng;
 
+
+
           // Actualizar la posición del marcador al hacer clic
           marker.setLatLng([clickedLat, clickedLng])
               .bindPopup('Nueva ubicación')
@@ -33,6 +45,8 @@
           // Actualizar las coordenadas en el formulario
           $("#latitudIni").text(clickedLat);
           $("#longitudIni").text(clickedLng);
+          document.getElementById("ini-ruta").value=""
+          document.getElementById("ini-ruta").placeholder="Direccion personalizada"
       });
     }
 

@@ -38,4 +38,17 @@ class SiteController extends AbstractController
         ]);
        
     }
+
+
+    #[Route('prueba', name:"prueba")]
+    public function prueba(): Response
+    {
+
+
+
+        return $this->render('pruebas/index.html.twig', [
+           
+        ]);
+       
+    }
 }

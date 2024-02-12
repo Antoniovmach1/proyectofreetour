@@ -1,6 +1,7 @@
 {% include '@EasyAdmin/page/content.html.twig' %}
 
 <div id="todoitem">
+
   <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -19,7 +20,8 @@
     <script src="{{asset('plugins/drag/imagen.js')}}"></script>
 
     <link rel="stylesheet" href="{{asset('plugins/drag/dist/image-uploader.min.css')}}">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
       rel="stylesheet">
 
     <!-- Font Awesome -->
@@ -35,9 +37,28 @@
     <!-- RichText JS -->
     <script type="text/javascript" src="{{asset('plugins/RichText/src/jquery.richtext.js')}}"></script>
 
-    <!-- lo mio JS -->
+    <!-- -->
     <script type="text/javascript" src="{{('plugins/RichText/richtext.js')}}"></script>
+
+
+
+    <!-- sortable -->
+
+    <link rel="stylesheet" href="{{asset('plugins/sortable/sortable.css')}}">
+    <script src="{{asset('plugins/sortable/sortable.js')}}"></script>
+
+    <!-- datepicker -->
+    <script src="{{asset('plugins/datepicker/datepicker.js')}}"></script>
+
+<!-- ruta -->
+    <script type="text/javascript" src="{{asset('js/ruta.js')}}"></script>
+<!-- guia  -->
+
+    <script type="text/javascript" src="{{asset('js/guia.js')}}"></script>
+
+
   </head>
+
   <body>
 
     <div id="tabs" class="container mt-4">
@@ -45,14 +66,19 @@
         <li class="nav-item"><a class="nav-link active" href="#tabs-1">Titulo y descripcion</a></li>
         <li class="nav-item"><a class="nav-link" href="#tabs-2">Imagenes</a></li>
         <li class="nav-item"><a class="nav-link" href="#tabs-3">Geolocalización</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tabs-4">Fecha e items</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tabs-4">Fecha</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tabs-5">Items</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tabs-6">Programacion</a></li>
       </ul>
       <div class="tab-content mt-2">
         <div id="tabs-1" class="tab-pane active">
           <div class="page-wrapper box-content">
             <label for="imageTitle">Titulo:</label>
-            <input type="text" id="imageTitle">
+            <input type="text" id="tituloruta">
             <textarea class="descripcionitem" name="example"></textarea>
+            <label for="imageTitle">Aforo:</label>
+            <input type="number" id="afororuta">
+
           </div>
         </div>
         <div id="tabs-2" class="tab-pane">
@@ -61,14 +87,28 @@
           </div>
         </div>
         <div id="tabs-3" class="tab-pane">
-          <label for="ini-ruta">Dirección:</label>
-          <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
-          <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
-          <div>
-            <p>Latitud: <span id="latitudIni"></span></p>
-            <p>Longitud: <span id="longitudIni"></span></p>
+
+          <button id="botonmodal">Abrir Mapa</button>
+
+          <div id="modalmapa" title="Mapa" style="display: none;">
+            <label for="ini-ruta">Dirección:</label>
+            <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
+            <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
+            <div>
+              <p>Latitud: <span id="latitudIni"></span></p>
+              <p>Longitud: <span id="longitudIni"></span></p>
+            </div>
+
+            <label for="provinciasSelect">Selecciona una provincia:</label>
+            <select id="provinciasSelect"></select>
+
+            <label for="localidadesSelect">Selecciona una localidad:</label>
+            <select id="localidadesSelect"></select>
+
+            <div id="mapa"></div>
           </div>
-          <div id="mapa"></div>
+
+
         </div>
         <div id="tabs-4" class="tab-pane active">
           <div class="page-wrapper box-content">
@@ -80,61 +120,77 @@
 
           </div>
         </div>
+
+        <div id="tabs-5" class="tab-pane active">
+  <div class="page-wrapper box-content">
+
+    <div id="itemssortable" style="overflow: hidden;">
+      <div style="float: left; width: 50%;">
+        <h4>Items</h4>
+        <ul id="sortable2" class="list-group connectedSortable" style="border: 1px solid #a9a9a9;">
+
+          <li class="list-group-item">Lion</li>
+          <li class="list-group-item">Dog</li>
+          <li class="list-group-item">Cat</li>
+          <li class="list-group-item">Tiger</li>
+        
+        </ul>
+      </div>
+      <div style="float: left; width: 50%;">
+        <h4>Items de la ruta</h4>
+        <ul id="sortable1" class="list-group connectedSortable" style="border: 1px solid #a9a9a9;">
+      
+        </ul>
+      </div>
+      
+    </div>
+
+    
+ 
+
+  </div>
+
+
+</div>
+
+   <div id="tabs-6" class="tab-pane active">
+          <div class="page-wrapper box-content">
+          <div id="botonesdiasemana" style="display: inline-flex">
+            <input type="checkbox" class="btn-check" id="btn-lunes" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn-lunes">Lunes</label><br>
+
+            <input type="checkbox" class="btn-check" id="btn-martes" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn-martes">Martes</label><br>
+
+            <input type="checkbox" class="btn-check" id="btn-miercoles" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn-miercoles">Miercoles</label><br>
+            
+            <input type="checkbox" class="btn-check" id="btn-jueves" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn-jueves">Jueves</label><br>
+
+            <input type="checkbox" class="btn-check" id="btn-viernes" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn-viernes">Viernes</label><br>
+            
+            <input type="checkbox" class="btn-check" id="btn-sabado" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn-sabado">Sabado</label><br>
+
+            <input type="checkbox" class="btn-check" id="btn-domingo" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btn-domingo">Domingo</label><br>
+</div>
+
+
+            <label for="usuarioSelect">Selecciona un guía:</label>
+            <select id="usuariosSelect"></select>
+
+             
+            </div>
+
+            <button id="crearRutaButton" >Crear ruta</button>
+
+
+
       </div>
     </div>
 
   </body>
 </div>
-
-<script>
-
-$(function() {
-
-    // Configuración de localización en español
-            $.datepicker.regional['es'] = {
-                closeText: 'Cerrar',
-                prevText: '&#x3C;Ant',
-                nextText: 'Sig&#x3E;',
-                currentText: 'Hoy',
-                monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
-                monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
-                dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
-                dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-                dayNamesMin: ['D', 'L', 'M', 'Mi', 'J', 'V', 'S'],
-                weekHeader: 'Sm',
-                dateFormat: 'dd/mm/yy',
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: ''
-            };
-            
-            $.datepicker.setDefaults($.datepicker.regional['es']);
-
-     $("#startDate").datepicker({
-                onSelect: function (selectedDate) {
-                    $("#endDate").datepicker("option", "minDate", selectedDate);
-                }
-            });
-
-            $("#endDate").datepicker({
-                onSelect: function (selectedDate) {
-                    $("#startDate").datepicker("option", "maxDate", selectedDate);
-                }
-            });
-    
-
-        var tituloElemento = document.querySelector('.content-header-title .title');
-
-
-        tituloElemento.textContent = 'Creacion de rutas';
-
-
-        $(".content").append($("#todoitem"))
-        })
-
-
-    </script>
-</body>
-</div>
-

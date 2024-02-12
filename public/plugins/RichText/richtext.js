@@ -69,11 +69,14 @@ $(document).ready(function () {
         
             // Placeholder text
             placeholder: 'Escribe aqui la descripcion del item...',
+
+
         
             // Developer settings
             useSingleQuotes: false,
             height: 300,
             adaptiveHeight: true,
+            
             // ... (other developer settings)
         });
 });

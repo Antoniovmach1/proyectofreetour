@@ -1,6 +1,7 @@
 {% include '@EasyAdmin/page/content.html.twig' %}
 
 <div id="todoitem">
+
   <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -19,7 +20,8 @@
     <script src="{{asset('plugins/drag/imagen.js')}}"></script>
 
     <link rel="stylesheet" href="{{asset('plugins/drag/dist/image-uploader.min.css')}}">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:300,400,500,600,700|Source+Code+Pro&display=swap"
       rel="stylesheet">
 
     <!-- Font Awesome -->
@@ -37,7 +39,21 @@
 
     <!-- lo mio JS -->
     <script type="text/javascript" src="{{('plugins/RichText/richtext.js')}}"></script>
+
+
+    <!-- localidad provincia -->
+    <script type="text/javascript" src="{{asset('js/provincialocalidad.js')}}"></script>
+
+  <!-- item -->
+    <script type="text/javascript" src="{{asset('js/item.js')}}"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
   </head>
+
   <body>
 
     <div id="tabs" class="container mt-4">
@@ -47,8 +63,17 @@
         <li class="nav-item"><a class="nav-link" href="#tabs-3">Geolocalización</a></li>
       </ul>
       <div class="tab-content mt-2">
+
+
+  
         <div id="tabs-1" class="tab-pane active">
           <div class="page-wrapper box-content">
+
+
+
+
+
+
             <label for="imageTitle">Titulo:</label>
             <input type="text" id="imageTitle">
             <textarea class="descripcionitem" name="example"></textarea>
@@ -60,15 +85,31 @@
           </div>
         </div>
         <div id="tabs-3" class="tab-pane">
-          <label for="ini-ruta">Dirección:</label>
-          <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
-          <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
-          <div>
-            <p>Latitud: <span id="latitudIni"></span></p>
-            <p>Longitud: <span id="longitudIni"></span></p>
+
+          <button id="botonmodal">Abrir Mapa</button>
+
+          <div id="modalmapa" title="Mapa" style="display: none;">
+            <label for="ini-ruta">Dirección:</label>
+            <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
+            <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
+            <div>
+              <p>Latitud: <span id="latitudIni"></span></p>
+              <p>Longitud: <span id="longitudIni"></span></p>
+            </div>
+
+            <label for="provinciasSelect">Selecciona una provincia:</label>
+            <select id="provinciasSelect"></select>
+
+            <label for="localidadesSelect">Selecciona una localidad:</label>
+            <select id="localidadesSelect"></select>
+
+            <div id="mapa"></div>
           </div>
-          <div id="mapa"></div>
+
+
         </div>
+        <button id="crearItemButton" >Crear item</button>
+
       </div>
     </div>
 
@@ -76,21 +117,17 @@
 </div>
 
 <script>
-
-$(function() {
-    
-
-        var tituloElemento = document.querySelector('.content-header-title .title');
+  $(function () {
 
 
-        tituloElemento.textContent = 'Creacion de items';
+    var tituloElemento = document.querySelector('.content-header-title .title');
 
 
-        $(".content").append($("#todoitem"))
-        })
+    tituloElemento.textContent = 'Creacion de items';
 
 
-    </script>
+    $(".content").append($("#todoitem"))
+  })
+</script>
 </body>
 </div>
-

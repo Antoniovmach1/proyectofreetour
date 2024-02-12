@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertir Imagen a Base64</title>
+</head>
+<body>
+
+  <input type="file" id="fileInput" accept="image/*"> <!-- Input para seleccionar un archivo de imagen -->
+  <br>
+  <img id="imagenMostrada" alt="Imagen mostrada">
+
+  <script>
+    // Evento cuando se selecciona un archivo
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+      var file = event.target.files[0];
+
+      if (file) {
+        // Leer el contenido del archivo como un Blob
+        var reader = new FileReader();
+        reader.onloadend = function() {
+          // La cadena Base64 está en reader.result
+          var base64String = reader.result.split(',')[1]; // Obtener solo la parte Base64
+          
+          // Mostrar la imagen en la página
+          document.getElementById('imagenMostrada').src = 'data:image/jpeg;base64,' + base64String;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

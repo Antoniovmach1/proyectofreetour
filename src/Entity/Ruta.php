@@ -17,16 +17,16 @@ class Ruta
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $nombre = null;
+    private ?string $titulo = null;
 
-    #[ORM\Column(length: 40, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $descripcion = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $foto = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $punto_inicio = null;
+    #[ORM\Column(nullable: true)]
+    private array $punto_inicio = [];
 
     #[ORM\ManyToMany(targetEntity: Item::class, mappedBy: 'Ruta')]
     private Collection $items;
@@ -43,6 +43,9 @@ class Ruta
     #[ORM\Column(length: 10)]
     private ?int $aforo = null;
 
+    #[ORM\Column(nullable: true)]
+    private array $programacion = [];
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -54,14 +57,14 @@ class Ruta
         return $this->id;
     }
 
-    public function getNombre(): ?string
+    public function getTitulo(): ?string
     {
-        return $this->nombre;
+        return $this->titulo;
     }
 
-    public function setNombre(string $nombre): static
+    public function setTitulo(string $titulo): static
     {
-        $this->nombre = $nombre;
+        $this->titulo = $titulo;
 
         return $this;
     }
@@ -191,6 +194,18 @@ class Ruta
     public function setAforo(int $aforo): static
     {
         $this->aforo = $aforo;
+
+        return $this;
+    }
+
+    public function getProgramacion(): array
+    {
+        return $this->programacion;
+    }
+
+    public function setProgramacion(array $programacion): static
+    {
+        $this->programacion = $programacion;
 
         return $this;
     }
