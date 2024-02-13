@@ -30,8 +30,10 @@ class ApiRutaController extends AbstractController
         $descripcion = $data['descripcion'];
         $foto = $data['foto'] ?? null;
         $punto_inicio = $data['punto_inicio'];
-        $fecha_ini = new DateTime($data['fecha_ini']);
-        $fecha_fin = new DateTime($data['fecha_fin']);
+        $fecha_ini = new DateTime($request->request->get('fecha_ini'));
+        $fecha_fin = new DateTime($request->request->get('fecha_fin'));
+        // $fecha_ini = new DateTime($data['fecha_ini']);
+        // $fecha_fin = new DateTime($data['fecha_fin']);
         $aforo = $data['aforo'];
         $programacion = $data['programacion'];
       

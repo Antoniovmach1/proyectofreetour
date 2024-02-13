@@ -22,7 +22,7 @@ $(function() {
             
             $.datepicker.setDefaults($.datepicker.regional['es']);
 
-     $("#startDate").datepicker({
+            $("#startDate").datepicker({
                 onSelect: function (selectedDate) {
                     $("#endDate").datepicker("option", "minDate", selectedDate);
                 }
@@ -31,6 +31,18 @@ $(function() {
             $("#endDate").datepicker({
                 onSelect: function (selectedDate) {
                     $("#startDate").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+
+            $("#startDateProg").datepicker({
+                onSelect: function (selectedDate) {
+                    $("#endDateProg").datepicker("option", "minDate", selectedDate);
+                }
+            });
+        
+            $("#endDateProg").datepicker({
+                onSelect: function (selectedDate) {
+                    $("#startDateProg").datepicker("option", "maxDate", selectedDate);
                 }
             });
     
