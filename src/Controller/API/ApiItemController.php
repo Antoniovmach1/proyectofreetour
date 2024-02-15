@@ -85,4 +85,27 @@ class ApiItemController extends AbstractController
 
         return new JsonResponse($json, 200, [], false);
     }
+
+    #[Route('/item/{localidadId}', name: 'getItemByLocalidad', methods: 'GET')]
+    public function getItemByLocalidad(ItemRepository $itemRepository, $localidadId): Response
+    {
+        $items = $itemRepository->findBy(['Localidad' => $localidadId]);
+    
+        if (!$items) {
+            return $this->json(['error' => 'Localidades no encontradas para la provincia seleccionada'], 404);
+        }
+    
+        $json = [];
+        foreach ($items as $item) {
+            $json[] = [
+                'id' => $item->getId(),
+                'nombre' => $item->getNombre(),
+                'descripcion' => $item->getDescripcion(),
+                'provincia_id' => $item->getLocalidad()->getId(),
+            ];
+        }
+    
+        return new JsonResponse($json, 200, [], false);
+    }
+    
 }

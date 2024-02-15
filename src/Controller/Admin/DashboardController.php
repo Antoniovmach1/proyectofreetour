@@ -6,6 +6,7 @@ use App\Entity\Informe;
 use App\Entity\Item;
 use App\Entity\Localidad;
 use App\Entity\Provincia;
+use App\Entity\Ruta;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -61,11 +62,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Usuario', 'fa fa-list',Usuario::class);
         yield MenuItem::linkToCrud('Informe', 'fa fa-list',Informe::class);
         yield MenuItem::linkToCrud('Item', 'fa fa-list',Item::class);
+        yield MenuItem::linkToCrud('Ruta', 'fa fa-list',Ruta::class);
 
 
         // yield MenuItem::section("Provincia");
         yield MenuItem::linkToCrud('Provincia', 'fa fa-list',Provincia::class);
         yield MenuItem::linkToCrud('Localidad', 'fa fa-list',Localidad::class);
+        
 
         yield MenuItem::section("Formularios");
         yield MenuItem::linkToRoute('Formulario item', 'fa fa-th-list',"creaitem");

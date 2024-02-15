@@ -49,7 +49,7 @@
     <!-- datepicker -->
     <script src="{{asset('plugins/datepicker/datepicker.js')}}"></script>
 
-      <!-- timepicker -->
+    <!-- timepicker -->
     <script src="{{asset('plugins/timepicker/timepicker.js')}}"></script>
 
     <!-- ruta -->
@@ -104,11 +104,7 @@
               <p>Longitud: <span id="longitudIni"></span></p>
             </div>
 
-            <label for="provinciasSelect">Selecciona una provincia:</label>
-            <select id="provinciasSelect"></select>
 
-            <label for="localidadesSelect">Selecciona una localidad:</label>
-            <select id="localidadesSelect"></select>
 
             <div id="mapa"></div>
           </div>
@@ -129,34 +125,51 @@
         <div id="tabs-5" class="tab-pane active">
           <div class="page-wrapper box-content">
 
-            <div id="itemssortable" style="overflow: hidden;">
-              <div style="float: left; width: 50%;">
-                <h4>Items</h4>
-                <ul id="sortable2" class="list-group connectedSortable" style="border: 1px solid #a9a9a9;">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-6 text-center">
 
-                  <li class="list-group-item">Lion</li>
-                  <li class="list-group-item">Dog</li>
-                  <li class="list-group-item">Cat</li>
-                  <li class="list-group-item">Tiger</li>
+                <div class="mb-3 d-flex align-items-center">
+                  <label for="provinciasSelect" class="form-label me-3">Provincia:</label>
+                  <select id="provinciasSelect" class="form-select"></select>
 
-                </ul>
+                  <label for="localidadesSelect" class="form-label ms-2 me-3">Localidad:</label>
+                  <select id="localidadesSelect" class="form-select" style="margin-left: 10px;"></select>
+
+                </div>
+
+
+
+                <div class="container text-center">
+                  <div class="mb-3 d-flex flex-row align-items-start justify-content-center">
+                    <div class="mr-5">
+                      <h4 class="mb-3" style="margin-top: 0; margin-bottom: 0;">Items</h4>
+                      <ul id="sortable2" class="list-group connectedSortable custom-list"
+                        style="border: 1px solid #a9a9a9; display: inline-block; width: 200px; min-width: 150px; min-height: 100px;">
+                        <li class="list-group-item" style="width: 180px;">Lion</li>
+                        <li class="list-group-item" style="width: 180px;">Dog</li>
+                        <li class="list-group-item" style="width: 180px;">Cat</li>
+                        <li class="list-group-item" style="width: 180px;">Tiger</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 class="mb-3" style="margin-top: 0; margin-bottom: 0;">Items de la ruta</h4>
+                      <ul id="sortable1" class="list-group connectedSortable custom-list"
+                        style="border: 1px solid #a9a9a9; display: inline-block; width: 200px; min-width: 150px; min-height: 100px;">
+                        <!-- Puedes agregar elementos aquí si es necesario -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+
+
               </div>
-              <div style="float: left; width: 50%;">
-                <h4>Items de la ruta</h4>
-                <ul id="sortable1" class="list-group connectedSortable" style="border: 1px solid #a9a9a9;">
-
-                </ul>
-              </div>
-
             </div>
 
-
-
-
           </div>
-
-
         </div>
+
 
         <div id="tabs-6" class="tab-pane active">
           <div class="page-wrapper box-content">
@@ -219,23 +232,23 @@
                 <label for="endDateProg" class="form-label">Fecha fin:</label>
                 <input type="text" class="fecha-input" id="endDateProg">
               </div>
-        <div class="d-inline-block">
-         <label for="horaDateProg" class="form-label">Hora:</label>
-            <input type="text" class="fecha-input" id="horaProg" placeholder="HH" maxlength="2">
-            <span>:</span>
-            <input type="text" class="fecha-input" id="minutoProg" placeholder="MM" maxlength="2">
-        </div>
-            
+              <div class="d-inline-block">
+                <label for="horaDateProg" class="form-label">Hora:</label>
+                <input type="text" class="fecha-input" id="horaProg" placeholder="HH" maxlength="2">
+                <span>:</span>
+                <input type="text" class="fecha-input" id="minutoProg" placeholder="MM" maxlength="2">
+              </div>
+
             </div>
-<div class="container mt-4">
-    <button id="btnAgregar" class="btn btn-success">
-      <i class="fas fa-plus"></i> Añadir
-    </button>
-  </div>
+            <div class="container mt-4">
+              <button id="btnAgregar" class="btn btn-success">
+                <i class="fas fa-plus"></i> Añadir
+              </button>
+            </div>
 
             <!-- Tabla con los campos guía, días de la semana, hora y temporada -->
             <div class="text-center">
-             
+
               <table class="table" id="tablaprog">
                 <thead>
                   <tr>
@@ -248,7 +261,7 @@
                   </tr>
                 </thead>
                 <tbody>
-               
+
                 </tbody>
               </table>
             </div>

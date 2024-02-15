@@ -27,16 +27,6 @@ $(function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
         
         var programacion = {
             jsonArrayProgramacion
