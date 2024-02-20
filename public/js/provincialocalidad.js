@@ -3,12 +3,12 @@ $(function () {
 
 let todasLasLocalidades = [];
 
-// Función para hacer la solicitud a la API de provincias
+
 function getProvincias() {
     fetch('/provincia')
         .then(response => response.json())
         .then(data => {
-            // Llamada a la función para mostrar los datos en el DOM
+         
             displayProvincias(data);
         })
         .catch(error => {
@@ -16,30 +16,42 @@ function getProvincias() {
         });
 }
 
-// Función para mostrar las provincias en el DOM
 function displayProvincias(provincias) {
     const provinciasSelect = document.getElementById('provinciasSelect');
+
+
+
+    const optionvacio = document.createElement('option');
+    optionvacio.value = "-2";
+    optionvacio.textContent = "";
+    provinciasSelect.appendChild(optionvacio);
+    
+   
+    const optiontodos = document.createElement('option');
+    optiontodos.value = "-1";
+    optiontodos.textContent = "Todos los item";
+    provinciasSelect.appendChild(optiontodos);
+    
 
     provincias.forEach(provincia => {
         const option = document.createElement('option');
         option.value = provincia.id;
         option.textContent = provincia.nombre;
+      
         provinciasSelect.appendChild(option);
     });
 
-    // Almacenar todas las localidades cuando se cargan las provincias
     getTodasLasLocalidades();
 }
 
-// Función para hacer la solicitud a la API de localidades
 function getTodasLasLocalidades() {
     fetch('/localidad')
         .then(response => response.json())
         .then(data => {
-            // Almacenar todas las localidades en la variable global
+
             todasLasLocalidades = data;
 
-            // Llamada a la función para obtener las localidades al cargar la página
+
             getLocalidades();
         })
         .catch(error => {
@@ -47,16 +59,16 @@ function getTodasLasLocalidades() {
         });
 }
 
-// Función para hacer la solicitud a la API de localidades por provincia
+
 function getLocalidades() {
-    // Obtener la provincia seleccionada
+
     const provinciasSelect = document.getElementById('provinciasSelect');
     const provinciaId = provinciasSelect.value;
 
-    // Filtrar las localidades por la provincia seleccionada
+
     const localidadesFiltradas = todasLasLocalidades.filter(localidad => localidad.provincia_id == provinciaId);
 
-    // Llamada a la función para mostrar los datos en el DOM
+
     displayLocalidades(localidadesFiltradas);
 }
 
@@ -64,6 +76,16 @@ function getLocalidades() {
 function displayLocalidades(localidades) {
     const localidadesSelect = document.getElementById('localidadesSelect');
     localidadesSelect.innerHTML = ''; 
+
+    if (provinciasSelect.value !=-1 ) {
+        // alert(provinciasSelect.value)
+        const optiontodos = document.createElement('option');
+        optiontodos.value = "0";
+        optiontodos.textContent = ""
+        localidadesSelect.appendChild(optiontodos);
+     
+    }
+    
 
     localidades.forEach(localidad => {
         const option = document.createElement('option');
@@ -73,9 +95,9 @@ function displayLocalidades(localidades) {
     });
 }
 
-// Función para filtrar las localidades por provincia al cambiar la selección
+
 function filtrarLocalidadesPorProvincia() {
-    // Llamada a la función para obtener las localidades según la provincia seleccionada
+   
     getLocalidades();
 }
 
@@ -86,7 +108,7 @@ $("#provinciasSelect").on("change",function () {
 })
 
 
-// Llamada a la función para obtener las provincias al cargar la página
+
 getProvincias();
 
 

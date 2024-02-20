@@ -60,6 +60,9 @@
 
     <script type="text/javascript" src="{{asset('js/provincialocalidad.js')}}"></script>
 
+    <!-- item -->
+    <script type="text/javascript" src="{{asset('js/item.js')}}"></script>
+
 
 
   </head>
@@ -68,10 +71,7 @@
 
     <div id="tabs" class="container mt-4">
       <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link active" href="#tabs-1">Titulo y descripcion</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tabs-2">Imagenes</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tabs-3">Geolocalización</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tabs-4">Fecha</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#tabs-1">Ruta</a></li>
         <li class="nav-item"><a class="nav-link" href="#tabs-5">Items</a></li>
         <li class="nav-item"><a class="nav-link" href="#tabs-6">Programacion</a></li>
       </ul>
@@ -80,196 +80,211 @@
           <div class="page-wrapper box-content">
             <label for="imageTitle">Titulo:</label>
             <input type="text" id="tituloruta">
-            <textarea class="descripcionitem" name="example"></textarea>
-            <label for="imageTitle">Aforo:</label>
-            <input type="number" id="afororuta">
-
-          </div>
-        </div>
-        <div id="tabs-2" class="tab-pane">
-          <div class="input-field">
-            <div class="input-images-1" style="padding-top: .5rem;"></div>
-          </div>
-        </div>
-        <div id="tabs-3" class="tab-pane">
-
-          <button id="botonmodal">Abrir Mapa</button>
-
-          <div id="modalmapa" title="Mapa" style="display: none;">
-            <label for="ini-ruta">Dirección:</label>
-            <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
-            <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
-            <div>
-              <p>Latitud: <span id="latitudIni"></span></p>
-              <p>Longitud: <span id="longitudIni"></span></p>
-            </div>
-
-
-
-            <div id="mapa"></div>
-          </div>
-
-
-        </div>
-        <div id="tabs-4" class="tab-pane active">
-          <div class="page-wrapper box-content">
 
             <label for="startDate" class="fecha-label">Fecha inicio:</label>
-            <input type="text" class="fecha-input" id="startDate">
+            <input type="text" class="fecha-input" id="startDate" maxlength="11" style="width: 90px;">
             <label for="endDate" class="fecha-label">Fecha fin:</label>
-            <input type="text" class="fecha-input" id="endDate">
+            <input type="text" class="fecha-input" id="endDate" maxlength="11" style="width: 90px;">
+
+            <label for="imageTitle">Aforo:</label>
+            <input type="number" id="afororuta" style="width: 60px" maxlength="2">
+
+            <button id="botonmodal">Abrir Mapa</button>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <textarea class="descripcionitem" name="example"></textarea>
+              </div>
+              <div class="col-md-6">
+                <div class="input-field">
+                  <div class="input-images-1" style="padding-top: .5rem;"></div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div id="modalmapa" title="Mapa" style="display: none;">
+              <label for="ini-ruta">Dirección:</label>
+              <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
+              <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
+              <div>
+                <p>Latitud: <span id="latitudIni"></span></p>
+                <p>Longitud: <span id="longitudIni"></span></p>
+              </div>
+
+              <div id="mapa"></div>
+
+
+              {# //4 #}
+
+              <div class="page-wrapper box-content">
+
+
+
+              </div>
+
+            </div>
+
 
           </div>
+
         </div>
-
-        <div id="tabs-5" class="tab-pane active">
-          <div class="page-wrapper box-content">
-
-            <div class="row justify-content-center align-items-center">
-              <div class="col-md-6 text-center">
-
-                <div class="mb-3 d-flex align-items-center">
-                  <label for="provinciasSelect" class="form-label me-3">Provincia:</label>
-                  <select id="provinciasSelect" class="form-select"></select>
-
-                  <label for="localidadesSelect" class="form-label ms-2 me-3">Localidad:</label>
-                  <select id="localidadesSelect" class="form-select" style="margin-left: 10px;"></select>
-
-                </div>
+      </div>
 
 
 
-                <div class="container text-center">
-                  <div class="mb-3 d-flex flex-row align-items-start justify-content-center">
-                    <div class="mr-5">
-                      <h4 class="mb-3" style="margin-top: 0; margin-bottom: 0;">Items</h4>
-                      <ul id="sortable2" class="list-group connectedSortable custom-list"
-                        style="border: 1px solid #a9a9a9; display: inline-block; width: 200px; min-width: 150px; min-height: 100px;">
-                        <li class="list-group-item" style="width: 180px;">Lion</li>
-                        <li class="list-group-item" style="width: 180px;">Dog</li>
-                        <li class="list-group-item" style="width: 180px;">Cat</li>
-                        <li class="list-group-item" style="width: 180px;">Tiger</li>
-                      </ul>
-                    </div>
 
-                    <div>
-                      <h4 class="mb-3" style="margin-top: 0; margin-bottom: 0;">Items de la ruta</h4>
-                      <ul id="sortable1" class="list-group connectedSortable custom-list"
-                        style="border: 1px solid #a9a9a9; display: inline-block; width: 200px; min-width: 150px; min-height: 100px;">
-                        <!-- Puedes agregar elementos aquí si es necesario -->
-                      </ul>
-                    </div>
+      <div id="tabs-5" class="tab-pane active">
+        <div class="page-wrapper box-content">
+
+          <div class="row justify-content-center align-items-center">
+            <div class="col-md-6 text-center">
+
+              <div class="mb-3 d-flex align-items-center">
+                <label for="provinciasSelect" class="form-label me-3">Provincia:</label>
+                <select id="provinciasSelect" class="form-select"></select>
+
+                <label for="localidadesSelect" class="form-label ms-2 me-3">Localidad:</label>
+                <select id="localidadesSelect" class="form-select" style="margin-left: 10px;"></select>
+
+              </div>
+
+
+
+              <div class="container text-center">
+                <div class="mb-3 d-flex flex-row align-items-start justify-content-center">
+                  <div class="mr-5">
+                    <h4 class="mb-3" style="margin-top: 0; margin-bottom: 0;">Items</h4>
+                    <ul id="sortable2" class="list-group connectedSortable custom-list"
+                      style="border: 1px solid #a9a9a9; display: inline-block; width: 200px; min-width: 150px; min-height: 100px;">
+
+
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 class="mb-3" style="margin-top: 0; margin-bottom: 0;">Items de la ruta</h4>
+                    <ul id="sortable1" class="list-group connectedSortable custom-list"
+                      style="border: 1px solid #a9a9a9; display: inline-block; width: 200px; min-width: 150px; min-height: 100px;">
+
+                    </ul>
                   </div>
                 </div>
-
-
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-
-        <div id="tabs-6" class="tab-pane active">
-          <div class="page-wrapper box-content">
-            <div class="mb-3 text-center">
-              <!-- Label para los días de la semana -->
-              <label for="diasSemana" class="form-label mb-2">Días de la semana:</label>
-
-              <!-- Checkboxes para los días de la semana con margen -->
-              <div class="btn-group d-flex justify-content-center" role="group" aria-label="Días de la semana">
-                <div class="mx-2">
-                  <input type="checkbox" class="btn-check" id="btn-lunes" autocomplete="off">
-                  <label class="btn btn-outline-primary" for="btn-lunes">Lunes</label>
-                </div>
-
-                <div class="mx-2">
-                  <input type="checkbox" class="btn-check" id="btn-martes" autocomplete="off">
-                  <label class="btn btn-outline-primary" for="btn-martes">Martes</label>
-                </div>
-
-                <div class="mx-2">
-                  <input type="checkbox" class="btn-check" id="btn-miercoles" autocomplete="off">
-                  <label class="btn btn-outline-primary" for="btn-miercoles">Miércoles</label>
-                </div>
-
-                <div class="mx-2">
-                  <input type="checkbox" class="btn-check" id="btn-jueves" autocomplete="off">
-                  <label class="btn btn-outline-primary" for="btn-jueves">Jueves</label>
-                </div>
-
-                <div class="mx-2">
-                  <input type="checkbox" class="btn-check" id="btn-viernes" autocomplete="off">
-                  <label class="btn btn-outline-primary" for="btn-viernes">Viernes</label>
-                </div>
-
-                <div class="mx-2">
-                  <input type="checkbox" class="btn-check" id="btn-sabado" autocomplete="off">
-                  <label class="btn btn-outline-primary" for="btn-sabado">Sábado</label>
-                </div>
-
-                <div class="mx-2">
-                  <input type="checkbox" class="btn-check" id="btn-domingo" autocomplete="off">
-                  <label class="btn btn-outline-primary" for="btn-domingo">Domingo</label>
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-3 text-center">
-              <!-- Selector para elegir un guía -->
-              <label for="guiaSelect" class="form-label mb-2">Selecciona un guia:</label>
-              <select class="form-select form-select-sm" id="usuariosSelect"></select>
-            </div>
-
-            <div class="mb-3 text-center">
-              <!-- Campos de fecha de inicio y fin centrados con margen -->
-              <div class="d-inline-block me-3">
-                <label for="startDateProg" class="form-label">Fecha inicio:</label>
-                <input type="text" class="fecha-input" id="startDateProg">
-              </div>
-              <div class="d-inline-block">
-                <label for="endDateProg" class="form-label">Fecha fin:</label>
-                <input type="text" class="fecha-input" id="endDateProg">
-              </div>
-              <div class="d-inline-block">
-                <label for="horaDateProg" class="form-label">Hora:</label>
-                <input type="text" class="fecha-input" id="horaProg" placeholder="HH" maxlength="2">
-                <span>:</span>
-                <input type="text" class="fecha-input" id="minutoProg" placeholder="MM" maxlength="2">
               </div>
 
-            </div>
-            <div class="container mt-4">
-              <button id="btnAgregar" class="btn btn-success">
-                <i class="fas fa-plus"></i> Añadir
-              </button>
-            </div>
 
-            <!-- Tabla con los campos guía, días de la semana, hora y temporada -->
-            <div class="text-center">
 
-              <table class="table" id="tablaprog">
-                <thead>
-                  <tr>
-                    <th>Guía</th>
-                    <th>Días de la semana</th>
-                    <th>Hora</th>
-                    <th>Fecha inicio</th>
-                    <th>Fecha final</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-              </table>
             </div>
           </div>
-        </div>
 
-        <button id="crearRutaButton">Crear ruta</button>
+        </div>
       </div>
+
+
+      <div id="tabs-6" class="tab-pane active">
+        <div class="page-wrapper box-content">
+          <div class="mb-3 text-center">
+            <!-- Label para los días de la semana -->
+            <label for="diasSemana" class="form-label mb-2">Días de la semana:</label>
+
+            <!-- Checkboxes para los días de la semana con margen -->
+            <div class="btn-group d-flex justify-content-center" role="group" aria-label="Días de la semana">
+              <div class="mx-2">
+                <input type="checkbox" class="btn-check" id="btn-lunes" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn-lunes">Lunes</label>
+              </div>
+
+              <div class="mx-2">
+                <input type="checkbox" class="btn-check" id="btn-martes" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn-martes">Martes</label>
+              </div>
+
+              <div class="mx-2">
+                <input type="checkbox" class="btn-check" id="btn-miercoles" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn-miercoles">Miércoles</label>
+              </div>
+
+              <div class="mx-2">
+                <input type="checkbox" class="btn-check" id="btn-jueves" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn-jueves">Jueves</label>
+              </div>
+
+              <div class="mx-2">
+                <input type="checkbox" class="btn-check" id="btn-viernes" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn-viernes">Viernes</label>
+              </div>
+
+              <div class="mx-2">
+                <input type="checkbox" class="btn-check" id="btn-sabado" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn-sabado">Sábado</label>
+              </div>
+
+              <div class="mx-2">
+                <input type="checkbox" class="btn-check" id="btn-domingo" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn-domingo">Domingo</label>
+              </div>
+            </div>
+          </div>
+
+        <div class="mb-3 text-center">
+    <!-- Selector para elegir un guía -->
+    <div class="d-flex flex-column align-items-center">
+        <label for="guiaSelect" class="form-label mb-2">Selecciona un guía:</label>
+        <select class="form-select form-select-sm" id="usuariosSelect" style="width: 500px;"></select>
+    </div>
+</div>
+
+          <div class="mb-3 text-center">
+            <!-- Campos de fecha de inicio y fin centrados con margen -->
+            <div class="d-inline-block me-3">
+              <label for="startDateProg" class="form-label">Fecha inicio:</label>
+              <input type="text" class="fecha-input" id="startDateProg">
+            </div>
+            <div class="d-inline-block">
+              <label for="endDateProg" class="form-label">Fecha fin:</label>
+              <input type="text" class="fecha-input" id="endDateProg">
+            </div>
+            <div class="d-inline-block">
+              <label for="horaDateProg" class="form-label">Hora:</label>
+              <input type="text" class="fecha-input" id="horaProg" placeholder="HH" maxlength="2">
+              <span>:</span>
+              <input type="text" class="fecha-input" id="minutoProg" placeholder="MM" maxlength="2">
+            </div>
+
+          </div>
+          <div class="container mt-4">
+            <button id="btnAgregar" class="btn btn-success">
+              <i class="fas fa-plus"></i> Añadir
+            </button>
+          </div>
+
+          <!-- Tabla con los campos guía, días de la semana, hora y temporada -->
+          <div class="text-center">
+
+            <table class="table" id="tablaprog">
+              <thead>
+                <tr>
+                  <th>Guía</th>
+                  <th>Días de la semana</th>
+                  <th>Hora</th>
+                  <th>Fecha inicio</th>
+                  <th>Fecha final</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <button id="crearRutaButton">Crear ruta</button>
+      <button id="crearRutayToursButton">Crear ruta y generar tours</button>
+    </div>
 
   </body>
 </div>

@@ -5,32 +5,49 @@ namespace App\Controller\API;
 use App\Entity\Item;
 use App\Entity\Localidad;
 use App\Repository\ItemRepository;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FileUploaderService;
 
 class ApiItemController extends AbstractController
 {
 
+    private $fileUploaderService;
+    public function __construct(FileUploaderService $fileUploader) {
+        $this->fileUploaderService=$fileUploader;
+    }
 
     #[Route("/item/crear", name: "postItem", methods: ["POST"])]
     public function createItem(Request $request, EntityManagerInterface $em): JsonResponse
     {
        
-        $data = json_decode($request->getContent(), true);
+        $data = $request->getContent();
+            
+        $titulo = $request->request->get('titulo');
+        $descripcion = $request->request->get('descripcion');
+        $localizacion = json_decode($request->request->get('localizacion'),true);
+        $foto = $request->files->get('foto');
+        $localidad = $request->request->get('localidad');
+
+
+        // $titulo = $data['titulo'];
+        // $descripcion = $data['descripcion'];
+        // $localizacion = $data['localizacion'];
+
+        // $foto = json_decode($data['foto']);
+
+        // // $foto = $data['foto'] ?? null;
+        // $localidadId = $data['localidad'];
     
- 
-        $titulo = $data['titulo'];
-        $descripcion = $data['descripcion'];
-        $localizacion = $data['localizacion'];
-        $foto = $data['foto'] ?? null;
-        $localidadId = $data['localidad'];
-    
+
+        $nombrefoto = $this->fileUploaderService->upload($foto);
       
-        if (!isset($titulo, $descripcion, $localizacion, $localidadId)) {
+        if (!isset($titulo, $descripcion, $localizacion, $localidad)) {
             return $this->json(['message' => 'Faltan campos obligatorios'], 400);
         }
     
@@ -39,10 +56,10 @@ class ApiItemController extends AbstractController
         $item->setNombre($titulo);
         $item->setDescripcion($descripcion);
         $item->setLocalizacion($localizacion);
-        $item->setFoto($foto);
+        $item->setFoto($nombrefoto);
     
       
-        $localidadEntity = $em->getRepository(Localidad::class)->find($localidadId);
+        $localidadEntity = $em->getRepository(Localidad::class)->find($localidad);
     
         if (!$localidadEntity) {
             return $this->json(['message' => 'La localidad no existe'], 400);

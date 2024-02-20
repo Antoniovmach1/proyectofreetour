@@ -7,6 +7,7 @@ use App\Entity\Item;
 use App\Entity\Localidad;
 use App\Entity\Provincia;
 use App\Entity\Ruta;
+use App\Entity\Tour;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -59,20 +60,22 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section("Entidades");
-        yield MenuItem::linkToCrud('Usuario', 'fa fa-list',Usuario::class);
+        yield MenuItem::linkToCrud('Usuario', 'fa fa-user-circle',Usuario::class);
         yield MenuItem::linkToCrud('Informe', 'fa fa-list',Informe::class);
-        yield MenuItem::linkToCrud('Item', 'fa fa-list',Item::class);
-        yield MenuItem::linkToCrud('Ruta', 'fa fa-list',Ruta::class);
+        yield MenuItem::linkToCrud('Item', 'fa fa-map-marker',Item::class);
+        yield MenuItem::linkToCrud('Ruta', 'fa fa-map-o',Ruta::class);
+        yield MenuItem::linkToCrud('Tour', 'fa fa-bicycle',Tour::class);
 
 
         // yield MenuItem::section("Provincia");
-        yield MenuItem::linkToCrud('Provincia', 'fa fa-list',Provincia::class);
-        yield MenuItem::linkToCrud('Localidad', 'fa fa-list',Localidad::class);
+        yield MenuItem::linkToCrud('Provincia', 'fa fa-map-pin',Provincia::class);
+        yield MenuItem::linkToCrud('Localidad', 'fa fa-map-signs',Localidad::class);
         
 
         yield MenuItem::section("Formularios");
-        yield MenuItem::linkToRoute('Formulario item', 'fa fa-th-list',"creaitem");
-        yield MenuItem::linkToRoute('Formulario ruta', 'fa fa-th-list',"crearuta");
+        // yield MenuItem::linkToRoute('Formulario item', 'fa fa-th-list',"creaitem");
+        // yield MenuItem::linkToRoute('Formulario ruta', 'fa fa-th-list',"crearuta");
+        yield MenuItem::linkToRoute('Crear tour / Calendario', 'fa fa fa-calendar',"creatour");
         
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }

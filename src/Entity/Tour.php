@@ -16,11 +16,11 @@ class Tour
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25)]
-    private ?string $nombre = null;
+    // #[ORM\Column(length: 25)]
+    // private ?string $nombre = null;
 
-    #[ORM\Column(length: 30, nullable: true)]
-    private ?string $descripcion = null;
+    // #[ORM\Column(length: 30, nullable: true)]
+    // private ?string $descripcion = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $fecha_inicio = null;
@@ -37,8 +37,8 @@ class Tour
     #[ORM\OneToMany(mappedBy: 'Tour', targetEntity: Informe::class)]
     private Collection $informes;
 
-    #[ORM\Column(type: Types::BLOB)]
-    private $coordenada = null;
+    // #[ORM\Column(type: Types::BLOB)]
+    // private $coordenada = null;
 
     public function __construct()
     {
@@ -51,29 +51,29 @@ class Tour
         return $this->id;
     }
 
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
+    // public function getNombre(): ?string
+    // {
+    //     return $this->nombre;
+    // }
 
-    public function setNombre(string $nombre): static
-    {
-        $this->nombre = $nombre;
+    // public function setNombre(string $nombre): static
+    // {
+    //     $this->nombre = $nombre;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getDescripcion(): ?string
-    {
-        return $this->descripcion;
-    }
+    // public function getDescripcion(): ?string
+    // {
+    //     return $this->descripcion;
+    // }
 
-    public function setDescripcion(?string $descripcion): static
-    {
-        $this->descripcion = $descripcion;
+    // public function setDescripcion(?string $descripcion): static
+    // {
+    //     $this->descripcion = $descripcion;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getFechaInicio(): ?\DateTimeInterface
     {
@@ -171,15 +171,15 @@ class Tour
         return $this;
     }
 
-    public function getCoordenada()
-    {
-        return $this->coordenada;
-    }
+    // public function getCoordenada()
+    // {
+    //     return $this->coordenada;
+    // }
 
-    public function setCoordenada($coordenada): static
-    {
-        $this->coordenada = $coordenada;
+    // public function setCoordenada($coordenada): static
+    // {
+    //     $this->coordenada = $coordenada;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

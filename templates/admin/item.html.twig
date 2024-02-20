@@ -54,80 +54,70 @@
 
   </head>
 
-  <body>
+ <body>
 
     <div id="tabs" class="container mt-4">
       <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link active" href="#tabs-1">Titulo y descripcion</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tabs-2">Imagenes</a></li>
-        <li class="nav-item"><a class="nav-link" href="#tabs-3">Geolocalización</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#tabs-1">Todo en Uno</a></li>
       </ul>
       <div class="tab-content mt-2">
-
-
-  
         <div id="tabs-1" class="tab-pane active">
           <div class="page-wrapper box-content">
 
-
-
-
-
-
-            <label for="imageTitle">Titulo:</label>
-            <input type="text" id="imageTitle">
-            <textarea class="descripcionitem" name="example"></textarea>
-          </div>
-        </div>
-        <div id="tabs-2" class="tab-pane">
-          <div class="input-field">
-            <div class="input-images-1" style="padding-top: .5rem;"></div>
-          </div>
-        </div>
-        <div id="tabs-3" class="tab-pane">
-
-          <button id="botonmodal">Abrir Mapa</button>
-
-          <div id="modalmapa" title="Mapa" style="display: none;">
-            <label for="ini-ruta">Dirección:</label>
-            <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
-            <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
-            <div>
-              <p>Latitud: <span id="latitudIni"></span></p>
-              <p>Longitud: <span id="longitudIni"></span></p>
+            <!-- Contenido del primer "tab" -->
+            <div class="row">
+              <div class="col-md-6">
+                <label for="imageTitle">Titulo:</label>
+                <input type="text" id="imageTitle">
+                  <button id="botonmodal">Abrir Mapa</button>
+              </div>
+           
             </div>
 
-            <label for="provinciasSelect">Selecciona una provincia:</label>
-            <select id="provinciasSelect"></select>
+        
+ <div class="row">
+              <div class="col-md-6">
+              
+                <textarea class="descripcionitem form-control mt-2" name="example"></textarea>
+              </div>
+              <div class="col-md-6">
+                <div class="input-field mt-2">
+                  
+                  <div class="input-images-1"></div>
+                </div>
+              </div>
+            </div>
+          
 
-            <label for="localidadesSelect">Selecciona una localidad:</label>
-            <select id="localidadesSelect"></select>
+            <div id="modalmapa" title="Mapa" style="display: none;">
+            
+              <label for="ini-ruta">Dirección:</label>
+              <input type="text" id="ini-ruta" placeholder="Ingrese la dirección">
+              <button onclick="geocodificarDireccion()">Obtener Coordenadas</button>
+              <div>
+                <p>Latitud: <span id="latitudIni"></span></p>
+                <p>Longitud: <span id="longitudIni"></span></p>
+              </div>
 
-            <div id="mapa"></div>
+              <label for="provinciasSelect">Selecciona una provincia:</label>
+              <select id="provinciasSelect"></select>
+
+              <label for="localidadesSelect">Selecciona una localidad:</label>
+              <select id="localidadesSelect"></select>
+
+              <div id="mapa"></div>
+            </div>
+
           </div>
-
-
         </div>
-        <button id="crearItemButton" >Crear item</button>
-
+                 <button id="crearItemButton" >Crear item</button>
       </div>
     </div>
 
   </body>
+
 </div>
 
-<script>
-  $(function () {
 
-
-    var tituloElemento = document.querySelector('.content-header-title .title');
-
-
-    tituloElemento.textContent = 'Creacion de items';
-
-
-    $(".content").append($("#todoitem"))
-  })
-</script>
 </body>
 </div>

@@ -33,7 +33,7 @@ class SiteUpdateManager
 
         $this->mailer->send($email);
 
-        // ...
+
 
         return true;
     }
