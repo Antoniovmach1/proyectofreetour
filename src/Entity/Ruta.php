@@ -153,7 +153,7 @@ class Ruta
     public function removeTour(Tour $Tour): static
     {
         if ($this->Tours->removeElement($Tour)) {
-            // set the owning side to null (unless already changed)
+          
             if ($Tour->getRuta() === $this) {
                 $Tour->setRuta(null);
             }
@@ -208,5 +208,10 @@ class Ruta
         $this->programacion = $programacion;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getFechaIni();
     }
 }

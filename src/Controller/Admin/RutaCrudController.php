@@ -3,7 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Ruta;
+use App\Entity\Usuario;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -72,13 +75,56 @@ class RutaCrudController extends AbstractCrudController
 
 
     #[Route('/updateruta', name:"updateruta")]
-    public function home2(): Response
+    public function updateruta(): Response
     {
 
         return $this->render('admin/ruta.html.twig', [
            
         ]);
        
+    }
+
+    #[Route('/rutas', name: 'rutas')]
+    public function verrutas(EntityManagerInterface $entityManager): Response
+    {
+      
+        $rutas = $entityManager->getRepository(Ruta::class)->findAll();
+
+        return $this->render('pruebas/index.html.twig', [
+            'rutas' => $rutas,
+        ]);
+    }
+
+    #[Route('/rutas/{id}', name: 'rutasporid')]
+    public function rutasporid(EntityManagerInterface $entityManager, $id): Response
+    {
+        $ruta = $entityManager->getRepository(Ruta::class)->find($id);
+    
+        if (!$ruta) {
+            throw $this->createNotFoundException('Ruta no encontrada con el id: ' . $id);
+        }
+    
+        $items = $ruta->getItems();
+        $tours = $ruta->getTours();
+    
+        // Utilizar un conjunto para asegurarse de que los usuarios no se repitan
+        $usuariosSet = new ArrayCollection();
+        foreach ($tours as $tour) {
+            $usuariosSet->add($tour->getUsuario()->getId());
+        }
+    
+        // Obtener los IDs de usuarios únicos como un array
+        $usuariosIds = $usuariosSet->toArray();
+    
+        // Obtener los usuarios correspondientes a los IDs
+        $usuarios = $entityManager->getRepository(Usuario::class)->findBy(['id' => $usuariosIds]);
+    
+        return $this->render('pruebas/ruta.html.twig', [
+            'rutas' => $ruta,
+            'items' => $items,
+            'tours' => $tours,
+            'usuarios' => $usuarios
+        ]);
     }
   
 }

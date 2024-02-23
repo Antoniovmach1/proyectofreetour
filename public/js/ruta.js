@@ -338,8 +338,6 @@ if (diasdelasemana.length > 0) {
 
 
 
-
-
         console.log(nombreguia + " " + idguia)
         console.log(diasdelasemana)
         console.log(startDateProg + " - " + endDateProg)
