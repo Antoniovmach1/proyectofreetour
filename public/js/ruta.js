@@ -3,9 +3,91 @@ $(function () {
     var crearRutaButton = $('#crearRutaButton');
     var crearRutayTourButton = $('#crearRutayToursButton');
 
+    // crearRutaButton.on('click', function () {
+
+    //     console.log(jsonArrayProgramacion);
+    //     var latitud = $('#latitudIni').text();
+    //     var longitud = $('#longitudIni').text();
+
+    //     fecha_ini = $('#startDate').val()
+    //     fecha_fin = $('#endDate').val()
+
+    //     console.log($('#tituloruta').val(), $('.richText-editor').html());
+
+    //     var titulo = $('#tituloruta').val()
+    //     descripcion = $('.richText-editor').html()
+    //     var punto_inicio = {
+    //         latitud: latitud,
+    //         longitud: longitud
+    //     };
+    //     foto = "foto"
+    //     var fecha_ini_formateada = new Date(fecha_ini).toLocaleDateString('en-GB', {
+    //         day: '2-digit',
+    //         month: '2-digit',
+    //         year: 'numeric'
+    //     });
+    //     var fecha_fin_formateada = new Date(fecha_fin).toLocaleDateString('en-GB', {
+    //         day: '2-digit',
+    //         month: '2-digit',
+    //         year: 'numeric'
+    //     });
+
+    //     aforo = $('#afororuta').val()
+
+
+
+
+    //     var programacion = {
+    //         jsonArrayProgramacion
+    //     };
+
+    //     var listaItems = $('#sortable1 li');
+    //     var listaItemsArray = [];
+
+    //     listaItems.each(function () {
+    //         listaItemsArray.push($(this).attr('id'));
+    //     });
+
+    //     console.log(listaItemsArray);
+
+
+
+    //     var datosPost = {
+    //         "titulo": titulo,
+    //         "descripcion": descripcion,
+    //         "foto": foto,
+    //         "punto_inicio": punto_inicio,
+    //         "fecha_ini": fecha_ini_formateada,
+    //         "fecha_fin": fecha_fin_formateada,
+    //         "aforo": aforo,
+    //         "programacion": programacion,
+    //         "listaItems": listaItemsArray,
+
+    //     };
+
+
+    //     $.ajax({
+    //         url: '/ruta/crear',
+    //         type: 'POST',
+    //         contentType: 'application/json',
+    //         data: JSON.stringify(datosPost),
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             console.log('Respuesta del servidor:', data);
+    //             alert("ruta creada correctamente")
+    //         },
+    //         error: function (error) {
+    //             console.error('Error en la solicitud:', error.responseText);
+    //             alert("error al crear la ruta consulte la consola")
+    //         }
+    //     });
+    // });
+
+
+
     crearRutaButton.on('click', function () {
 
-        console.log(jsonArrayProgramacion);
+       
         var latitud = $('#latitudIni').text();
         var longitud = $('#longitudIni').text();
 
@@ -20,7 +102,8 @@ $(function () {
             latitud: latitud,
             longitud: longitud
         };
-        foto = "foto"
+        // foto = "foto"
+        foto = $("input[type=file]")[0].files[0];
         var fecha_ini_formateada = new Date(fecha_ini).toLocaleDateString('en-GB', {
             day: '2-digit',
             month: '2-digit',
@@ -48,200 +131,335 @@ $(function () {
             listaItemsArray.push($(this).attr('id'));
         });
 
-        console.log(listaItemsArray);
+
+        var formdata = new FormData()
+        formdata.append("titulo", titulo)
+        formdata.append("descripcion", descripcion)
+        formdata.append("foto", foto, foto.name)
+        formdata.append("punto_inicio", JSON.stringify(punto_inicio))
+        formdata.append("fecha_ini", fecha_ini)
+        formdata.append("fecha_fin", fecha_fin)
+        formdata.append("aforo", aforo)
+        formdata.append("programacion", JSON.stringify(programacion))
+        formdata.append("listaItems", JSON.stringify(listaItemsArray));
+        // formdata.append("listaItems" ,JSON.stringify(listaItems))
 
 
 
-        var datosPost = {
-            "titulo": titulo,
-            "descripcion": descripcion,
-            "foto": foto,
-            "punto_inicio": punto_inicio,
-            "fecha_ini": fecha_ini_formateada,
-            "fecha_fin": fecha_fin_formateada,
-            "aforo": aforo,
-            "programacion": programacion,
-            "listaItems": listaItemsArray,
-
-        };
 
 
         $.ajax({
             url: '/ruta/crear',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(datosPost),
-            dataType: 'json',
+            data: formdata,
+            contentType: false,
+            processData: false,
             success: function (data) {
                 console.log('Respuesta del servidor:', data);
                 alert("ruta creada correctamente")
-            },
-            error: function (error) {
-                console.error('Error en la solicitud:', error.responseText);
-                alert("error al crear la ruta consulte la consola")
-            }
-        });
-    });
 
 
 
+                var listaItems = $('#sortable1 li');
+                var listaItemsArray = [];
 
-    crearRutayTourButton.on('click', function () {
+                listaItems.each(function () {
+                    listaItemsArray.push($(this).attr('id'));
+                });
 
-        console.log(jsonArrayProgramacion);
-        var latitud = $('#latitudIni').text();
-        var longitud = $('#longitudIni').text();
-
-        fecha_ini = $('#startDate').val()
-        fecha_fin = $('#endDate').val()
-
-      
-
-        var titulo = $('#tituloruta').val()
-        descripcion = $('.richText-editor').html()
-        var punto_inicio = {
-            latitud: latitud,
-            longitud: longitud
-        };
-        foto = "foto"
-        var fecha_ini_formateada = new Date(fecha_ini).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-        var fecha_fin_formateada = new Date(fecha_fin).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-
-        aforo = $('#afororuta').val()
+                console.log(listaItemsArray);
 
 
 
+                var datosPost = {
+                 
+                    "id": data.message,
+                    "listaItems": listaItemsArray,
 
-        var programacion = {
-            jsonArrayProgramacion
-        };
-
-        var listaItems = $('#sortable1 li');
-        var listaItemsArray = [];
-
-        listaItems.each(function () {
-            listaItemsArray.push($(this).attr('id'));
-        });
-
-      
-
-
-
-        var datosPost = {
-            "titulo": titulo,
-            "descripcion": descripcion,
-            "foto": foto,
-            "punto_inicio": punto_inicio,
-            "fecha_ini": fecha_ini_formateada,
-            "fecha_fin": fecha_fin_formateada,
-            "aforo": aforo,
-            "programacion": programacion,
-            "listaItems": listaItemsArray,
-
-        };
-
-
-        $.ajax({
-            url: '/ruta/crear',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(datosPost),
-            dataType: 'json',
-            success: function (data) {
-                console.log('Respuesta del servidor:', data);
-                console.log(data.message);
-
-
-               
-
-
-
-                var datosgenerar = {
-      
-                    "id":data.message,
-                    jsonArrayProgramacion
-            
-            
                 };
-
-                console.log(datosgenerar);
 
 
                 $.ajax({
-                    url: '/tour/crear',
+                    url: '/ruta_item/crear',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify(datosgenerar),
+                    data: JSON.stringify(datosPost),
                     dataType: 'json',
                     success: function (data) {
                         console.log('Respuesta del servidor:', data);
-                        console.log(data.message);
-            
-                        
-                       
-                        alert("programacion creada correctamente")
+                        alert("ruta creada correctamente")
                     },
                     error: function (error) {
                         console.error('Error en la solicitud:', error.responseText);
                         alert("error al crear la ruta consulte la consola")
                     }
                 });
+                //-------------
 
 
 
 
 
-
-
-
-
-                alert("ruta creada correctamente")
             },
             error: function (error) {
                 console.error('Error en la solicitud:', error.responseText);
                 alert("error al crear la ruta consulte la consola")
             }
         });
-
-// function llamadagenerartour() {
-   
-   
-
-
-
-//     $.ajax({
-//         url: '/tour/crear',
-//         type: 'POST',
-//         contentType: 'application/json',
-//         data: JSON.stringify(datosgenerar),
-//         dataType: 'json',
-//         success: function (data) {
-//             console.log('Respuesta del servidor:', data);
-//             console.log(data.message);
-
-            
-           
-//             alert("ruta creada correctamente")
-//         },
-//         error: function (error) {
-//             console.error('Error en la solicitud:', error.responseText);
-//             alert("error al crear la ruta consulte la consola")
-//         }
-//     });
-    
-// }
-
-
-
     });
+
+
+    //----
+    crearRutayTourButton.on('click', function () {
+        var latitud = $('#latitudIni').text();
+        var longitud = $('#longitudIni').text();
+    
+        fecha_ini = $('#startDate').val()
+        fecha_fin = $('#endDate').val()
+    
+        console.log($('#tituloruta').val(), $('.richText-editor').html());
+    
+        var titulo = $('#tituloruta').val()
+        descripcion = $('.richText-editor').html()
+        var punto_inicio = {
+            latitud: latitud,
+            longitud: longitud
+        };
+    
+        foto = $("input[type=file]")[0].files[0];
+        var fecha_ini_formateada = new Date(fecha_ini).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        var fecha_fin_formateada = new Date(fecha_fin).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    
+        aforo = $('#afororuta').val()
+    
+        var programacion = {
+            jsonArrayProgramacion: jsonArrayProgramacion 
+        };
+    
+        var listaItems = $('#sortable1 li');
+        var listaItemsArray = [];
+    
+        listaItems.each(function () {
+            listaItemsArray.push($(this).attr('id'));
+        });
+    
+        var formdata = new FormData()
+        formdata.append("titulo", titulo)
+        formdata.append("descripcion", descripcion)
+        formdata.append("foto", foto, foto.name)
+        formdata.append("punto_inicio", JSON.stringify(punto_inicio))
+        formdata.append("fecha_ini", fecha_ini)
+        formdata.append("fecha_fin", fecha_fin)
+        formdata.append("aforo", aforo)
+        formdata.append("programacion", JSON.stringify(programacion))
+        formdata.append("listaItems", JSON.stringify(listaItemsArray));
+    
+        $.ajax({
+            url: '/ruta/crear',
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data: formdata,
+            success: function (data) {
+                console.log('Respuesta del servidor:', data);
+                alert("ruta creada correctamente")
+    
+                var listaItems = $('#sortable1 li');
+                var listaItemsArray = [];
+    
+                listaItems.each(function () {
+                    listaItemsArray.push($(this).attr('id'));
+                });
+    
+                var datosPost = {
+                    "id": data.message,
+                    "listaItems": listaItemsArray,
+                };
+    
+                $.ajax({
+                    url: '/ruta_item/crear',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(datosPost),
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log('Respuesta del servidor:', data);
+                        alert("ruta creada correctamente")
+                        var datosgenerar = {
+                            "id": data.message,
+                            jsonArrayProgramacion: jsonArrayProgramacion 
+                        };
+    
+                        console.log(datosgenerar);
+    
+                        $.ajax({
+                            url: '/tour/crear',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(datosgenerar),
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log('Respuesta del servidor:', data);
+                                console.log(data.message);
+    
+                                alert("programacion creada correctamente")
+                            },
+                            error: function (error) {
+                                console.error('Error en la solicitud:', error.responseText);
+                                alert("error al crear la ruta consulte la consola")
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error en la solicitud:', error.responseText);
+                        alert("error al crear la ruta consulte la consola")
+                    }
+                });
+            },
+            error: function (error) {
+                console.error('Error en la solicitud:', error.responseText);
+                alert("error al crear la ruta consulte la consola")
+            }
+        });
+    });
+    
+    // crearRutayTourButton.on('click', function () {
+
+    //     console.log(jsonArrayProgramacion);
+    //     var latitud = $('#latitudIni').text();
+    //     var longitud = $('#longitudIni').text();
+
+    //     fecha_ini = $('#startDate').val()
+    //     fecha_fin = $('#endDate').val()
+
+
+
+    //     var titulo = $('#tituloruta').val()
+    //     descripcion = $('.richText-editor').html()
+    //     var punto_inicio = {
+    //         latitud: latitud,
+    //         longitud: longitud
+    //     };
+    //     foto = "foto"
+    //     var fecha_ini_formateada = new Date(fecha_ini).toLocaleDateString('en-GB', {
+    //         day: '2-digit',
+    //         month: '2-digit',
+    //         year: 'numeric'
+    //     });
+    //     var fecha_fin_formateada = new Date(fecha_fin).toLocaleDateString('en-GB', {
+    //         day: '2-digit',
+    //         month: '2-digit',
+    //         year: 'numeric'
+    //     });
+
+    //     aforo = $('#afororuta').val()
+
+
+
+
+    //     var programacion = {
+    //         jsonArrayProgramacion
+    //     };
+
+    //     var listaItems = $('#sortable1 li');
+    //     var listaItemsArray = [];
+
+    //     listaItems.each(function () {
+    //         listaItemsArray.push($(this).attr('id'));
+    //     });
+
+
+
+
+
+    //     var datosPost = {
+    //         "titulo": titulo,
+    //         "descripcion": descripcion,
+    //         "foto": foto,
+    //         "punto_inicio": punto_inicio,
+    //         "fecha_ini": fecha_ini_formateada,
+    //         "fecha_fin": fecha_fin_formateada,
+    //         "aforo": aforo,
+    //         "programacion": programacion,
+    //         "listaItems": listaItemsArray,
+
+    //     };
+
+
+    //     $.ajax({
+    //         url: '/ruta/crear',
+    //         type: 'POST',
+    //         contentType: 'application/json',
+    //         data: JSON.stringify(datosPost),
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             console.log('Respuesta del servidor:', data);
+    //             console.log(data.message);
+
+
+
+
+
+
+    //             var datosgenerar = {
+
+    //                 "id": data.message,
+    //                 jsonArrayProgramacion
+
+
+    //             };
+
+    //             console.log(datosgenerar);
+
+
+    //             $.ajax({
+    //                 url: '/tour/crear',
+    //                 type: 'POST',
+    //                 contentType: 'application/json',
+    //                 data: JSON.stringify(datosgenerar),
+    //                 dataType: 'json',
+    //                 success: function (data) {
+    //                     console.log('Respuesta del servidor:', data);
+    //                     console.log(data.message);
+
+
+
+    //                     alert("programacion creada correctamente")
+    //                 },
+    //                 error: function (error) {
+    //                     console.error('Error en la solicitud:', error.responseText);
+    //                     alert("error al crear la ruta consulte la consola")
+    //                 }
+    //             });
+
+
+
+
+
+
+
+
+
+    //             alert("ruta creada correctamente")
+    //         },
+    //         error: function (error) {
+    //             console.error('Error en la solicitud:', error.responseText);
+    //             alert("error al crear la ruta consulte la consola")
+    //         }
+    //     });
+
+       
+
+    // });
 
 
 
@@ -289,39 +507,39 @@ $(function () {
 
         var diasdelasemana = '';
 
-if ($('#btn-lunes').is(':checked')) {
-    diasdelasemana += $('#btn-lunes + label').text() + ',';
-    validadordiasemana = validadordiasemana + 1;
-}
-if ($('#btn-martes').is(':checked')) {
-    diasdelasemana += $('#btn-martes + label').text() + ',';
-    validadordiasemana = validadordiasemana + 1;
-}
-if ($('#btn-miercoles').is(':checked')) {
-    diasdelasemana += $('#btn-miercoles + label').text() + ',';
-    validadordiasemana = validadordiasemana + 1;
-}
-if ($('#btn-jueves').is(':checked')) {
-    diasdelasemana += $('#btn-jueves + label').text() + ',';
-    validadordiasemana = validadordiasemana + 1;
-}
-if ($('#btn-viernes').is(':checked')) {
-    diasdelasemana += $('#btn-viernes + label').text() + ',';
-    validadordiasemana = validadordiasemana + 1;
-}
-if ($('#btn-sabado').is(':checked')) {
-    diasdelasemana += $('#btn-sabado + label').text() + ',';
-    validadordiasemana = validadordiasemana + 1;
-}
-if ($('#btn-domingo').is(':checked')) {
-    diasdelasemana += $('#btn-domingo + label').text() + ',';
-    validadordiasemana = validadordiasemana + 1;
-}
+        if ($('#btn-lunes').is(':checked')) {
+            diasdelasemana += $('#btn-lunes + label').text() + ',';
+            validadordiasemana = validadordiasemana + 1;
+        }
+        if ($('#btn-martes').is(':checked')) {
+            diasdelasemana += $('#btn-martes + label').text() + ',';
+            validadordiasemana = validadordiasemana + 1;
+        }
+        if ($('#btn-miercoles').is(':checked')) {
+            diasdelasemana += $('#btn-miercoles + label').text() + ',';
+            validadordiasemana = validadordiasemana + 1;
+        }
+        if ($('#btn-jueves').is(':checked')) {
+            diasdelasemana += $('#btn-jueves + label').text() + ',';
+            validadordiasemana = validadordiasemana + 1;
+        }
+        if ($('#btn-viernes').is(':checked')) {
+            diasdelasemana += $('#btn-viernes + label').text() + ',';
+            validadordiasemana = validadordiasemana + 1;
+        }
+        if ($('#btn-sabado').is(':checked')) {
+            diasdelasemana += $('#btn-sabado + label').text() + ',';
+            validadordiasemana = validadordiasemana + 1;
+        }
+        if ($('#btn-domingo').is(':checked')) {
+            diasdelasemana += $('#btn-domingo + label').text() + ',';
+            validadordiasemana = validadordiasemana + 1;
+        }
 
-// Elimina la última coma si hay días seleccionados
-if (diasdelasemana.length > 0) {
-    diasdelasemana = diasdelasemana.slice(0, -1);
-}
+        // Elimina la última coma si hay días seleccionados
+        if (diasdelasemana.length > 0) {
+            diasdelasemana = diasdelasemana.slice(0, -1);
+        }
 
 
 

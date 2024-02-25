@@ -60,6 +60,16 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../Styles/home/css/style.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="{{asset('plugins/tabs/mapa.css')}}" />
+    <script src="{{asset('plugins/tabs/mapaderuta.js')}}"></script>
   </head>
 
   <body>
@@ -162,7 +172,9 @@
               <div class="blog-item">
                 <div class="position-relative">
 
-                  <img class="img-fluid w-100" src="../Styles/home/img/carousel-1.jpg" alt="">
+                  <div class="image-container">
+                    <img class="img-fluid w-100" src="../uploads/images/{{ rutas.foto }}" alt="">
+                  </div>
 
                 </div>
               </div>
@@ -178,47 +190,53 @@
                 <h2 class="mb-3">{{ rutas.titulo }}</h2>
                 <p>{{ rutas.descripcion|raw }}</p>
 
+             
+
               </div>
             </div>
             <!-- Blog Detail End -->
 
-
+            <div class="bg-white mb-3" style="padding: 30px;">
+              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Punto inicial de la ruta</h4>
+                 <div id="mapa" style="height: 300px;"></div>
+            </div>
 
 
             <!-- Comment Form Start -->
             <div class="bg-white mb-3" style="padding: 30px;">
-    <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Realiza aquí tu reserva</h4>
-    <form class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="numeroparticipantes">Numero de participantes</label>
-                <input type="number" class="form-control" id="numeroparticipantes">
-            </div>
-        </div>
+              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Realiza aquí tu reserva</h4>
+              <form class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="idruta" id="idruta" style="display: none;">{{ rutas.id }}</label>
+                    <label for="numeroparticipantes">Numero de participantes</label>
+                    <input type="number" class="form-control" id="numeroparticipantes">
+                  </div>
+                </div>
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="selected_tour" class="mr-2">Selecciona una fecha:</label>
-              <select class="form-control" name="selected_tour" id="selected_tour">
-    {% for tour in tours %}
-        {% set fechaActual = "now"|date("Y-m-d H:i") %}
-        {% set fechaTour = tour.FechaInicio|date("Y-m-d H:i") %}
-        
-        {% if fechaTour > fechaActual %}
-            <option value="{{ tour.id }}">{{ fechaTour }}</option>
-        {% endif %}
-    {% endfor %}
-</select>
-            </div>
-        </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="selected_tour" class="mr-2">Selecciona una fecha:</label>
+                    <select class="form-control" name="selected_tour" id="selected_tour">
+                      {% for tour in tours %}
+                      {% set fechaActual = "now"|date("Y-m-d H:i") %}
+                      {% set fechaTour = tour.FechaInicio|date("Y-m-d H:i") %}
 
-        <div class="col-md-12 mt-3"> {# Añadir margen superior para separar del botón #}
-            <div class="form-group mb-0">
-                <input type="submit" value="Reservar" class="btn btn-primary font-weight-semi-bold py-2 px-3">
+                      {% if fechaTour > fechaActual %}
+                      <option value="{{ tour.id }}">{{ fechaTour }}</option>
+                      {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-12 mt-3"> {# Añadir margen superior para separar del botón #}
+                  <div class="form-group mb-0">
+                    <input type="submit" value="Reservar" class="btn btn-primary font-weight-semi-bold py-2 px-3">
+                  </div>
+                </div>
+              </form>
             </div>
-        </div>
-    </form>
-</div>
             <!-- Comment Form End -->
           </div>
 
@@ -234,7 +252,9 @@
                 <div class="media-body">
                   <h5 class="mt-0"><a>{{ item.nombre }}</a></h5>
                   <p>{{ item.descripcion|raw }}</p>
+
                 </div>
+
               </div>
               {% endfor %}
             </div>
@@ -384,5 +404,6 @@
 
     {% endblock %}
   </body>
+
 
 </html>

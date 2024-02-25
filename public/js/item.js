@@ -53,9 +53,11 @@ $(function () {
             processData: false,
             success: function (data) {
                 console.log('Respuesta del servidor:', data);
+                alert("item creado correctamente")
             },
             error: function (error) {
                 console.error('Error en la solicitud:', error.responseText);
+                alert("error al crear el item consulte la consola")
             }
         });
     });

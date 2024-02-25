@@ -22,7 +22,7 @@ class Ruta
     #[ORM\Column(length: 255)]
     private ?string $descripcion = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private $foto = null;
 
     #[ORM\Column(nullable: true)]
