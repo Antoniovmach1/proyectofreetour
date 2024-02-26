@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Reserva;
 use App\Entity\Tour;
 use App\Entity\Usuario;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,13 +17,17 @@ class ReservaType extends AbstractType
     {
         $builder
             ->add('cantidad')
-            ->add('Usuario', EntityType::class, [
-                'class' => Usuario::class,
-'choice_label' => 'id',
-            ])
-            ->add('Tour', EntityType::class, [
+            ->add('tour', EntityType::class, [
                 'class' => Tour::class,
-'choice_label' => 'id',
+                'choice_label' => function ($tour) {
+                    return $tour->getFechaInicio()->format('Y-m-d'); 
+                },
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->where('t.fecha_inicio > :currentDate')
+                        ->setParameter('currentDate', new \DateTime())
+                        ->orderBy('t.fecha_inicio', 'ASC');
+                },
             ])
         ;
     }

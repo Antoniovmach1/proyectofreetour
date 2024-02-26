@@ -2,8 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Reserva;
 use App\Entity\Ruta;
+use App\Entity\Tour;
 use App\Entity\Usuario;
+use App\Form\ReservaType;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -96,9 +100,36 @@ class RutaCrudController extends AbstractCrudController
     }
 
     #[Route('/rutas/{id}', name: 'rutasporid')]
-    public function rutasporid(EntityManagerInterface $entityManager, $id): Response
+    public function rutasporid(EntityManagerInterface $entityManager, $id, Request $request): Response
     {
+
+        $reserva = new Reserva();
+
+        $form = $this->createForm(ReservaType::class,$reserva);
+
+        $form->handleRequest($request);
+
         $ruta = $entityManager->getRepository(Ruta::class)->find($id);
+
+
+        
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $reserva->setUsuario($this->getUser());
+
+            $cantidad= $form->get('cantidad')->getData();
+            $reserva->setCantidad($cantidad);
+
+            $id= $form->get('Tour')->getData();
+            $tour=$entityManager->getRepository(Tour::class)->findBy(['id' => $id]);
+            $reserva->setTour($tour[0]);
+
+            $entityManager->persist($reserva);
+            $entityManager->flush();
+        }
+
+
     
         if (!$ruta) {
             throw $this->createNotFoundException('Ruta no encontrada con el id: ' . $id);
@@ -123,7 +154,8 @@ class RutaCrudController extends AbstractCrudController
             'rutas' => $ruta,
             'items' => $items,
             'tours' => $tours,
-            'usuarios' => $usuarios
+            'usuarios' => $usuarios,
+            'form' =>$form->createView(),
         ]);
     }
   

@@ -205,7 +205,9 @@
             <!-- Comment Form Start -->
             <div class="bg-white mb-3" style="padding: 30px;">
               <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Realiza aquí tu reserva</h4>
-              <form class="row">
+              {# <form class="row"> #}
+              {{form_start(form)}}
+              {{form_widget(form)}}
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="idruta" id="idruta" style="display: none;">{{ rutas.id }}</label>
@@ -235,7 +237,8 @@
                     <input type="submit" value="Reservar" class="btn btn-primary font-weight-semi-bold py-2 px-3">
                   </div>
                 </div>
-              </form>
+             
+              {{form_end(form)}}
             </div>
             <!-- Comment Form End -->
           </div>
