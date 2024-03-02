@@ -125,6 +125,31 @@ class ApiTourController extends AbstractController
 
         return new JsonResponse($json, 200, [], false);
     }
+
+
+
+
+    #[Route('/tour/{usuarioId}', name: 'getTourByUsuario', methods: ['GET'])]
+        public function getTourByUsuario(TourRepository $tourRepository, int $usuarioId): JsonResponse
+        {
+            $tours = $tourRepository->findBy(['Usuario' => $usuarioId]);
+
+            if (!$tours) {
+                return $this->json(['error' => 'Tours no encontrados para el usuario con ID ' . $usuarioId], 404);
+            }
+
+            $json = [];
+            foreach ($tours as $tour) {
+                $json[] = [
+                    'id' => $tour->getId(),
+                    'fecha_inicio' => $tour->getFechaInicio(),
+                    'ruta_id' => $tour->getRuta()->getId(),
+                    'usuario_id' => $tour->getUsuario()->getId(),
+                ];
+            }
+
+            return new JsonResponse($json, 200, [], false);
+}
 }
 
 

@@ -207,7 +207,7 @@
 
 
 
-   
+
 
 
 
@@ -221,21 +221,21 @@
         </div>
         <div class="row">
 
-  {% for ruta in rutas %}
-        
-        
-
-
+          {% for ruta in rutas %}
           <div class="col-lg-4 col-md-6 mb-4">
-            <div class="package-item bg-white mb-2">
-              <img class="img-fluid" src="img/package-1.jpg" alt="">
+            <div class="package-item bg-white mb-2" style="height: 300px;">
+              <!-- Establece una altura fija para el contenedor -->
+              <img class="img-fluid w-100 h-100 object-fit-cover" src="../uploads/images/{{ ruta.foto }}">
               <div class="p-4">
                 <div class="d-flex justify-content-between mb-3">
-                  <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i></small>
-                  <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>02/09/2023</small>
-                  <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>02/09/2023</small>
+                  <small class="m-0"><i
+                      class="fa fa-map-marker-alt text-primary mr-2">{{ ruta.items[0].localidad.nombre}}</i></small>
+                  <small class="m-0"><i
+                      class="fa fa-calendar-alt text-primary mr-2"></i>{{ ruta.FechaIni.format('Y-m-d') }}</small>
+                  <small class="m-0"><i
+                      class="fa fa-calendar-alt text-primary mr-2"></i>{{ ruta.FechaFin.format('Y-m-d') }}</small>
                 </div>
-                <a class="h5 text-decoration-none" href="">{{ ruta.titulo }}</a>
+                <a class="h5 text-decoration-none"  href="{{ path('rutasporid', {'id': ruta.id}) }}">{{ ruta.titulo }}</a>
                 <div class="border-top mt-4 pt-4">
                   <div class="d-flex justify-content-between">
                     <h5 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h5>
@@ -244,9 +244,7 @@
               </div>
             </div>
           </div>
-
-         
-{% endfor %}
+          {% endfor %}
 
 
         </div>

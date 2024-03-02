@@ -142,15 +142,22 @@
     <!-- Navbar End -->
 
 
+
+
+
+
+
+
+
     <!-- Header Start -->
     <div class="container-fluid page-header">
       <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-          <h3 class="display-4 text-white text-uppercase">Rutas</h3>
+          <h3 class="display-4 text-white text-uppercase">Tus reservas</h3>
           <div class="d-inline-flex text-white">
             <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
             <i class="fa fa-angle-double-right pt-1 px-3"></i>
-            <p class="m-0 text-uppercase">Rutas</p>
+            <p class="m-0 text-uppercase">Tus reservas</p>
           </div>
         </div>
       </div>
@@ -158,184 +165,144 @@
     <!-- Header End -->
 
 
-
-
-
-
-    <!-- Blog Start -->
-    <div class="container-fluid py-5">
-      <div class="container py-5">
-        <div class="row">
-          <div class="col-lg-8">
-            <!-- Blog Detail Start -->
-            <div class="pb-3">
-              <div class="blog-item">
-                <div class="position-relative">
-
-                  <div class="image-container">
-                    <img class="img-fluid w-100" src="../uploads/images/{{ rutas.foto }}" alt="">
-                  </div>
-
-                </div>
-              </div>
-              <div class="bg-white mb-3" style="padding: 30px;">
-
-                <a class="text-primary text-uppercase text-decoration-none">{{ items[0].localidad.nombre }}</a>
-
-
-                <span class="text-primary px-2">|</span>
-                <a
-                  class="text-primary text-uppercase text-decoration-none">{{ items[0].localidad.provincia.nombre }}</a>
-
-                <h2 class="mb-3">{{ rutas.titulo }}</h2>
-                <p>{{ rutas.descripcion|raw }}</p>
-
-
-
-              </div>
-            </div>
-            <!-- Blog Detail End -->
-
-            <div class="bg-white mb-3" style="padding: 30px;">
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Punto inicial de la ruta</h4>
-              <div id="mapa" style="height: 300px;"></div>
-            </div>
+    <!-- Booking Start -->
 
 
 
 
 
-            <!-- Comment Form Start -->
-            <div class="bg-white mb-3" style="padding: 30px;">
-
-
-              {% if app.user %}
-
-
-
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Realiza aquí tu reserva</h4>
-              {# <form class="row">  #}
-
-              {{form_start(form)}}
-              {# {{form_widget(form)}}  #}
-              {# {{ form_widget(form.cantidad) }}  #}
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="idruta" id="idruta" style="display: none;">{{ rutas.id }}</label>
-                  <label for="numeroparticipantes">Numero de participantes</label>
-                  {# <input type="number" class="form-control" id="numeroparticipantes"> #}
-                  {{ form_widget(form.cantidad) }}
-                   {{ form_errors(form.cantidad) }}
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="selected_tour" class="mr-2">Selecciona una fecha:</label>
-                  {{ form_widget(form.tour) }}
-                  {# <select class="form-control" name="selected_tour" id="selected_tour">
-                    {% for tour in tours %}
-                    {% set fechaActual = "now"|date("Y-m-d H:i") %}
-                    {% set fechaTour = tour.FechaInicio|date("Y-m-d H:i") %}
-
-                    {% if fechaTour > fechaActual %}
-                    <option value="{{ tour.id }}">{{ fechaTour }}</option>
-                    {% endif %}
-                    {% endfor %}
-                  </select> #}
-                </div>
-              </div>
-
-              <div class="col-md-12 mt-3"> {# Añadir margen superior para separar del botón #}
-                <div class="form-group mb-0">
-                  <input type="submit" value="Reservar" class="btn btn-primary font-weight-semi-bold py-2 px-3">
-                </div>
-              </div>
-
-              {{form_end(form)}}
-
-              
-{% else %}
-    <p>Inicia sesión para acceder a contenido exclusivo.</p>
-    {# Otro contenido para usuarios no autenticados #}
-{% endif %}
-
-            </div>
-            <!-- Comment Form End -->
-          </div>
-
-          <div class="col-lg-4 mt-5 mt-lg-0">
-
-
-            <!-- Comment List Start -->
-            <div class="bg-white p-3 mb-3">
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Items de la ruta</h4>
-              {% for item in items %}
-              <div class="media mb-4">
-                <img src="../uploads/images/{{ item.foto }}" class="mr-3 img-fluid object-fit-cover"
-                  style="max-width: 100px; max-height: 100px;">
-                <div class="media-body">
-                  <h5 class="mt-0"><a>{{ item.nombre }}</a></h5>
-                  <p>{{ item.descripcion|raw }}</p>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            <!-- Comment List End -->
-
-
-            <!-- Comment List Start -->
-            <div class="bg-white p-3 mb-3">
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Nuestros guias</h4>
-
-              {% for usuario in usuarios %}
-              <div class="media mb-4">
-                <img src="../uploads/images/usuario/{{ usuario.foto }}" class="mr-3 img-fluid object-fit-cover"
-                  style="max-width: 100px; max-height: 100px;">
-                <div class="media-body">
-                  <h5 class="mt-0"><a>{{ usuario.nombre ~ ' ' ~ usuario.apellidos }}</a></h5>
-                </div>
-              </div>
-              {% endfor %}
-
-            </div>
-            <!-- Comment List End -->
 
 
 
 
 
-            <!-- Comment List Start -->
-            <div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Comentarios</h4>
-              <div class="media mb-4">
-                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                <div class="media-body">
-                  <h6><a>Jose Peña</a></h6>
-                  <p>ejemplo 1</p>
-                </div>
-              </div>
-              <div class="media">
-                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                <div class="media-body">
-                  <h6><a>Pepep domingo</a></h6>
-                  <p>Ejemlplo 2</p>
-                </div>
-              </div>
-            </div>
-            <!-- Comment List End -->
 
-
-          </div>
+    <!-- Packages Start -->
+    <div class="container-fluid py-5" style="">
+      <div class="container pt-5 pb-3">
+        <div class="text-center mb-3 pb-3">
+          <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;"></h6>
+          <h1>Todas tus reservas</h1>
         </div>
-      </div>
-    </div>
-    <!-- Blog End -->
+        <div class="row">
 
 
-    <!-- Footer Start -->
-    {# <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+
+          {{ form_start(form) }}
+
+          <style>
+            .dynamic-rating {
+              display: flex;
+            }
+
+            .star-radio {
+              display: none;
+            }
+
+            .star-radio+label {
+              cursor: pointer;
+              font-size: 24px;
+              color: #ffc107;
+              margin-right: 5px;
+            }
+
+            .star-radio:checked {
+              content: '★';
+              color: #ffea00;
+            }
+
+            /* Agrega estilos adicionales según tu preferencia */
+          </style>
+
+          <div class="dynamic-rating guia">
+            {% for child in form.valoracion_guia %}
+            {{ form_widget(child, {'attr': {'class': 'star-radio'}}) }}
+            <label for="{{ child.vars.id }}">★</label>
+            {% endfor %}
+          </div>
+
+          <div class="dynamic-rating ruta">
+            {% for child in form.valoracion_Ruta %}
+            {{ form_widget(child, {'attr': {'class': 'star-radio'}}) }}
+            <label for="{{ child.vars.id }}">★</label>
+            {% endfor %}
+          </div>
+
+          <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+          <script>
+            $(document).ready(function () {
+              $('.dynamic-rating.guia .star-radio').change(function () {
+                var selectedValue = parseInt($(this).val());
+                var options = $('.dynamic-rating.guia .star-radio');
+
+                options.each(function (index) {
+                  var symbol = index < selectedValue ? '★' : '☆';
+                  $(this).next().text(symbol);
+                });
+              });
+
+              $('.dynamic-rating.ruta .star-radio').change(function () {
+                var selectedValue = parseInt($(this).val());
+                var options = $('.dynamic-rating.ruta .star-radio');
+
+                options.each(function (index) {
+                  var symbol = index < selectedValue ? '★' : '☆';
+                  $(this).next().text(symbol);
+                });
+              });
+            });
+          </script>
+
+
+          {# <div class="form-group">
+            {{ form_widget(form.valoracion_Ruta) }}
+          </div> #}
+
+          <div class="form-group">
+            {{ form_widget(form.comentario) }}
+          </div>
+
+          <div class="form-group">
+            <input type="submit" value="Reservar" class="btn btn-primary font-weight-semi-bold py-2 px-3">
+          </div>
+
+          {{ form_end(form) }}
+
+          <div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
+            <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Tus comentarios para la ruta:  {{reserva.tour.ruta.titulo}}</h4>
+            {% if reserva.tour.reservas is not empty %}
+            {% for unaReserva in reserva.tour.reservas %}
+            {# Debug: Mostrar información de la reserva para verificar la estructura de datos #}
+            {# {{ dump(unaReserva) }} #}
+
+            {% if unaReserva.valoracions is not empty %}
+            {% for valoracion in unaReserva.valoracions %}
+            <div class="media mb-4">
+              <img src="../uploads/images/usuario/{{ valoracion.reserva.usuario.foto }}" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+              <div class="media-body">
+                <h6><a>{{ valoracion.reserva.usuario.email }}</a></h6>
+                <p>{{ valoracion.comentario }}</p>
+                      <p>valoracion guia: {{ valoracion.valoracionGuia }}/5</p> 
+                      <p>valoracion ruta: {{ valoracion.valoracionRuta }}/5</p>
+                
+              </div>
+            </div>
+        
+        
+            {% endfor %}
+            {% else %}
+           
+            {% endif %}
+            
+            {% endfor %}
+            {% else %}
+            <p>No hay reservas disponibles para este tour.</p>
+            {% endif %}
+          </div>
+          <!-- Packages End -->
+
+          <!-- Footer Start -->
+          {# <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
         <div class="row pt-5">
             <div class="col-lg-3 col-md-6 mb-5">
                 <a href="" class="navbar-brand">
@@ -403,31 +370,29 @@
             </div>
         </div>
     </div> #}
-    <!-- Footer End -->
+          <!-- Footer End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+          <!-- Back to Top -->
+          <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+          <!-- JavaScript Libraries -->
+          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+          <script src="lib/easing/easing.min.js"></script>
+          <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+          <script src="lib/tempusdominus/js/moment.min.js"></script>
+          <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+          <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+          <!-- Contact Javascript File -->
+          <script src="mail/jqBootstrapValidation.min.js"></script>
+          <script src="mail/contact.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
 
-    {% endblock %}
+
+          {% endblock %}
   </body>
-
 
 </html>

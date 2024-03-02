@@ -52,10 +52,14 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'Usuario', targetEntity: Reserva::class)]
     private Collection $reservas;
 
+    #[ORM\OneToMany(mappedBy: 'guiaid', targetEntity: Informe::class)]
+    private Collection $informes;
+
     public function __construct()
     {
         $this->Tours = new ArrayCollection();
         $this->reservas = new ArrayCollection();
+        $this->informes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -244,5 +248,35 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->getNombre()." ".$this->getApellidos()." ID:".$this->getId();
+    }
+
+    /**
+     * @return Collection<int, Informe>
+     */
+    public function getInformes(): Collection
+    {
+        return $this->informes;
+    }
+
+    public function addInforme(Informe $informe): static
+    {
+        if (!$this->informes->contains($informe)) {
+            $this->informes->add($informe);
+            $informe->setGuiaid($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInforme(Informe $informe): static
+    {
+        if ($this->informes->removeElement($informe)) {
+            // set the owning side to null (unless already changed)
+            if ($informe->getGuiaid() === $this) {
+                $informe->setGuiaid(null);
+            }
+        }
+
+        return $this;
     }
 }

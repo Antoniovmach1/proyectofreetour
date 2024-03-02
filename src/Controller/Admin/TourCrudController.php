@@ -2,8 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Ruta;
 use App\Entity\Tour;
 use App\Entity\Usuario;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -64,15 +66,7 @@ class TourCrudController extends AbstractCrudController
         ];
     }
 
-#[Route('/creartour', name:"creatour")]
-    public function home(): Response
-    {
-
-        return $this->render('admin/tour.html.twig', [
-           
-        ]);
-       
-    }
-
+    
+    
 
 }

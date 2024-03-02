@@ -17,12 +17,12 @@
 
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-  {% block stylesheets %}
+  {# {% block stylesheets %}
   {% endblock %}
 
   {% block javascripts %}
   {% block importmap %}{{ importmap('app') }}{% endblock %}
-  {% endblock %}
+  {% endblock %} #}
 </head>
 <header>
 
@@ -59,17 +59,7 @@
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../Styles/home/css/style.css" rel="stylesheet">
-
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-    <link rel="stylesheet" href="{{asset('plugins/tabs/mapa.css')}}" />
-    <script src="{{asset('plugins/tabs/mapaderuta.js')}}"></script>
+    <link href="Styles/home/css/style.css" rel="stylesheet">
   </head>
 
   <body>
@@ -105,7 +95,7 @@
 
 
               <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> {{ app.user.email }}</a>
+                {# <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> {{ app.user.email }}</a> #}
 
                 <div class="dropdown-menu border-0 rounded-0 m-0">
                   <a href="logout" class="dropdown-item">Cerrar sesion</a>
@@ -146,11 +136,11 @@
     <div class="container-fluid page-header">
       <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-          <h3 class="display-4 text-white text-uppercase">Rutas</h3>
+          <h3 class="display-4 text-white text-uppercase">Tus reservas</h3>
           <div class="d-inline-flex text-white">
             <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
             <i class="fa fa-angle-double-right pt-1 px-3"></i>
-            <p class="m-0 text-uppercase">Rutas</p>
+            <p class="m-0 text-uppercase">Tus reservas</p>
           </div>
         </div>
       </div>
@@ -158,181 +148,88 @@
     <!-- Header End -->
 
 
-
-
-
-
-    <!-- Blog Start -->
-    <div class="container-fluid py-5">
-      <div class="container py-5">
-        <div class="row">
-          <div class="col-lg-8">
-            <!-- Blog Detail Start -->
-            <div class="pb-3">
-              <div class="blog-item">
-                <div class="position-relative">
-
-                  <div class="image-container">
-                    <img class="img-fluid w-100" src="../uploads/images/{{ rutas.foto }}" alt="">
-                  </div>
-
-                </div>
-              </div>
-              <div class="bg-white mb-3" style="padding: 30px;">
-
-                <a class="text-primary text-uppercase text-decoration-none">{{ items[0].localidad.nombre }}</a>
-
-
-                <span class="text-primary px-2">|</span>
-                <a
-                  class="text-primary text-uppercase text-decoration-none">{{ items[0].localidad.provincia.nombre }}</a>
-
-                <h2 class="mb-3">{{ rutas.titulo }}</h2>
-                <p>{{ rutas.descripcion|raw }}</p>
-
-
-
-              </div>
-            </div>
-            <!-- Blog Detail End -->
-
-            <div class="bg-white mb-3" style="padding: 30px;">
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Punto inicial de la ruta</h4>
-              <div id="mapa" style="height: 300px;"></div>
-            </div>
+    <!-- Booking Start -->
 
 
 
 
 
-            <!-- Comment Form Start -->
-            <div class="bg-white mb-3" style="padding: 30px;">
-
-
-              {% if app.user %}
-
-
-
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Realiza aquí tu reserva</h4>
-              {# <form class="row">  #}
-
-              {{form_start(form)}}
-              {# {{form_widget(form)}}  #}
-              {# {{ form_widget(form.cantidad) }}  #}
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="idruta" id="idruta" style="display: none;">{{ rutas.id }}</label>
-                  <label for="numeroparticipantes">Numero de participantes</label>
-                  {# <input type="number" class="form-control" id="numeroparticipantes"> #}
-                  {{ form_widget(form.cantidad) }}
-                   {{ form_errors(form.cantidad) }}
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="selected_tour" class="mr-2">Selecciona una fecha:</label>
-                  {{ form_widget(form.tour) }}
-                  {# <select class="form-control" name="selected_tour" id="selected_tour">
-                    {% for tour in tours %}
-                    {% set fechaActual = "now"|date("Y-m-d H:i") %}
-                    {% set fechaTour = tour.FechaInicio|date("Y-m-d H:i") %}
-
-                    {% if fechaTour > fechaActual %}
-                    <option value="{{ tour.id }}">{{ fechaTour }}</option>
-                    {% endif %}
-                    {% endfor %}
-                  </select> #}
-                </div>
-              </div>
-
-              <div class="col-md-12 mt-3"> {# Añadir margen superior para separar del botón #}
-                <div class="form-group mb-0">
-                  <input type="submit" value="Reservar" class="btn btn-primary font-weight-semi-bold py-2 px-3">
-                </div>
-              </div>
-
-              {{form_end(form)}}
-
-              
-{% else %}
-    <p>Inicia sesión para acceder a contenido exclusivo.</p>
-    {# Otro contenido para usuarios no autenticados #}
-{% endif %}
-
-            </div>
-            <!-- Comment Form End -->
-          </div>
-
-          <div class="col-lg-4 mt-5 mt-lg-0">
-
-
-            <!-- Comment List Start -->
-            <div class="bg-white p-3 mb-3">
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Items de la ruta</h4>
-              {% for item in items %}
-              <div class="media mb-4">
-                <img src="../uploads/images/{{ item.foto }}" class="mr-3 img-fluid object-fit-cover"
-                  style="max-width: 100px; max-height: 100px;">
-                <div class="media-body">
-                  <h5 class="mt-0"><a>{{ item.nombre }}</a></h5>
-                  <p>{{ item.descripcion|raw }}</p>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            <!-- Comment List End -->
-
-
-            <!-- Comment List Start -->
-            <div class="bg-white p-3 mb-3">
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Nuestros guias</h4>
-
-              {% for usuario in usuarios %}
-              <div class="media mb-4">
-                <img src="../uploads/images/usuario/{{ usuario.foto }}" class="mr-3 img-fluid object-fit-cover"
-                  style="max-width: 100px; max-height: 100px;">
-                <div class="media-body">
-                  <h5 class="mt-0"><a>{{ usuario.nombre ~ ' ' ~ usuario.apellidos }}</a></h5>
-                </div>
-              </div>
-              {% endfor %}
-
-            </div>
-            <!-- Comment List End -->
 
 
 
 
 
-            <!-- Comment List Start -->
-            <div class="bg-white" style="padding: 30px; margin-bottom: 30px;">
-              <h4 class="text-uppercase mb-4" style="letter-spacing: 5px;">Comentarios</h4>
-              <div class="media mb-4">
-                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                <div class="media-body">
-                  <h6><a>Jose Peña</a></h6>
-                  <p>ejemplo 1</p>
-                </div>
-              </div>
-              <div class="media">
-                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                <div class="media-body">
-                  <h6><a>Pepep domingo</a></h6>
-                  <p>Ejemlplo 2</p>
-                </div>
-              </div>
-            </div>
-            <!-- Comment List End -->
 
-
-          </div>
+    <!-- Packages Start -->
+    <div class="container-fluid py-5" style="">
+      <div class="container pt-5 pb-3">
+        <div class="text-center mb-3 pb-3">
+          <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;"></h6>
+          <h1>Todas tus reservas</h1>
         </div>
-      </div>
-    </div>
-    <!-- Blog End -->
+        <div class="row">
+          {% for reserva in reservas %}
+          {% if app.user and reserva.usuario.id == app.user.id %}
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="package-item bg-white mb-2" style="height: 200px;">
+              <div class="p-4">
+                <div class="d-flex justify-content-between mb-3">
+                  <!-- Agregar el botón de activación del modal -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal"
+                    data-target="#exampleModal{{ reserva.id }}">
+                    Ver Detalles
+                  </button>
+                </div>
 
+                <a class="h5 text-decoration-none"
+                  href="{{ path('reservaportour', {'id': reserva.id}) }}">{{ reserva.tour.ruta.titulo }}</a>
+
+                <div class="border-top mt-4 pt-2">
+                  <p class="mb-0"><strong>Fecha:</strong> {{ reserva.tour.FechaInicio.format('Y-m-d H:i:s') }}</p>
+                  <p class="mb-0"><strong>Reserva para:</strong> {{ reserva.cantidad }} personas</p>
+                </div>
+
+                <!-- Agregar el modal para cada reserva -->
+                <div class="modal fade" id="exampleModal{{ reserva.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModal{{ reserva.id }}Title" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModal{{ reserva.id }}Title">Detalles de la Reserva</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- Agregar detalles adicionales de la reserva aquí -->
+                        <p>Fecha de inicio: {{ reserva.tour.FechaInicio.format('Y-m-d H:i:s') }}</p>
+                        <p>Cantidad de personas: {{ reserva.cantidad }}</p>
+                        <!-- Agregar más detalles según sea necesario -->
+
+                        <!-- Agregar el botón para eliminar la reserva -->
+                        <a href="{{ path('deletereserva', {'id': reserva.id}) }}" class="btn btn-danger">Eliminar
+                          Reserva</a>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <!-- Agregar botones adicionales según sea necesario -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+   
+    {% endif %}
+    {% endfor %}
+
+
+    </div>
+    </div>
+    </div>
+    <!-- Packages End -->
 
     <!-- Footer Start -->
     {# <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
@@ -428,6 +325,5 @@
 
     {% endblock %}
   </body>
-
 
 </html>

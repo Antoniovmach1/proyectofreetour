@@ -16,6 +16,9 @@ class ApiUsuarioController extends AbstractController
     public function getUsuario(UsuarioRepository $usuarioRepository): Response
     {
 
+        if ($this->estalogeado()){
+
+       
 
         $usuarios=$usuarioRepository->findAll();
        
@@ -39,5 +42,18 @@ class ApiUsuarioController extends AbstractController
         }
 
         return new JsonResponse($json, 200, [], false);
+    }else{
+        return $this->json(['error' => 'Debe iniciar sesion'], 401);
     }
+    }
+
+
+private function estalogeado():bool
+{
+    if ($this->getUser()){
+    
+    return true;
+}
+return false;
+}
 }

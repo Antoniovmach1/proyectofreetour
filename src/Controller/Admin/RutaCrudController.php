@@ -93,70 +93,69 @@ class RutaCrudController extends AbstractCrudController
     {
       
         $rutas = $entityManager->getRepository(Ruta::class)->findAll();
+        
 
         return $this->render('pruebas/index.html.twig', [
             'rutas' => $rutas,
         ]);
     }
 
+
+
+
     #[Route('/rutas/{id}', name: 'rutasporid')]
     public function rutasporid(EntityManagerInterface $entityManager, $id, Request $request): Response
     {
-
         $reserva = new Reserva();
-
-        $form = $this->createForm(ReservaType::class,$reserva);
-
-        $form->handleRequest($request);
-
+    
         $ruta = $entityManager->getRepository(Ruta::class)->find($id);
-
-
-        
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $reserva->setUsuario($this->getUser());
-
-            $cantidad= $form->get('cantidad')->getData();
-            $reserva->setCantidad($cantidad);
-
-            $id= $form->get('Tour')->getData();
-            $tour=$entityManager->getRepository(Tour::class)->findBy(['id' => $id]);
-            $reserva->setTour($tour[0]);
-
-            $entityManager->persist($reserva);
-            $entityManager->flush();
-        }
-
-
     
         if (!$ruta) {
             throw $this->createNotFoundException('Ruta no encontrada con el id: ' . $id);
         }
     
+        $form = $this->createForm(ReservaType::class, $reserva, [
+            'attr' => ['rutaId' => $id], // Aquí debes utilizar el valor correcto de rutaId
+        ]);
+    
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reserva->setUsuario($this->getUser());
+    
+            $cantidad = $form->get('cantidad')->getData();
+            $reserva->setCantidad($cantidad);
+    
+            $tourId = $form->get('tour')->getData();
+            $tour = $entityManager->getRepository(Tour::class)->find($tourId);
+            $reserva->setTour($tour);
+    
+            $entityManager->persist($reserva);
+            $entityManager->flush();
+
+            
+        }
+    
         $items = $ruta->getItems();
         $tours = $ruta->getTours();
     
-        // Utilizar un conjunto para asegurarse de que los usuarios no se repitan
         $usuariosSet = new ArrayCollection();
         foreach ($tours as $tour) {
             $usuariosSet->add($tour->getUsuario()->getId());
         }
     
-        // Obtener los IDs de usuarios únicos como un array
         $usuariosIds = $usuariosSet->toArray();
     
-        // Obtener los usuarios correspondientes a los IDs
         $usuarios = $entityManager->getRepository(Usuario::class)->findBy(['id' => $usuariosIds]);
+
+        
     
         return $this->render('pruebas/ruta.html.twig', [
             'rutas' => $ruta,
             'items' => $items,
             'tours' => $tours,
             'usuarios' => $usuarios,
-            'form' =>$form->createView(),
+            'form' => $form->createView(),
         ]);
     }
-  
 }

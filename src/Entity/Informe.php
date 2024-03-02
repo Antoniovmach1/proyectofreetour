@@ -26,6 +26,9 @@ class Informe
     #[ORM\ManyToOne(inversedBy: 'informes')]
     private ?Tour $Tour = null;
 
+    #[ORM\ManyToOne(inversedBy: 'informes')]
+    private ?Usuario $guia = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Informe
     public function setTour(?Tour $Tour): static
     {
         $this->Tour = $Tour;
+
+        return $this;
+    }
+
+    public function getGuia(): ?Usuario
+    {
+        return $this->guia;
+    }
+
+    public function setGuia(?Usuario $guia): static
+    {
+        $this->guia = $guia;
 
         return $this;
     }
