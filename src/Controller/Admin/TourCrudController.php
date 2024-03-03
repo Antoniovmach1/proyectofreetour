@@ -10,6 +10,7 @@ use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -28,6 +29,29 @@ class TourCrudController extends AbstractCrudController
         return Tour::class;
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+       
+        ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
+            return $action->linkToCrudAction('editTour');
+
+        });
+    }
+
+
+    #[Route('/editTour', name:"editTour")]
+    public function editTour(AdminContext $context)
+    {
+        $entityInstance = $context->getEntity()->getInstance();
+        $id = $entityInstance->getId();
+
+        return $this->render('admin/edittour.html.twig', [
+           "id"=> $id
+        ]);
+    }
+
+
     // public function configureActions(Actions $actions): Actions
     // {
     //  return $actions
@@ -40,15 +64,15 @@ class TourCrudController extends AbstractCrudController
     // }
 
 
-    // #[Route('/creartour', name:"creatour")]
-    // public function home(): Response
-    // {
+     #[Route('/creartour', name:"creatour")]
+     public function home(): Response
+     {
 
-    //     return $this->render('admin/tour.html.twig', [
+         return $this->render('admin/tour.html.twig', [
            
-    //     ]);
+         ]);
        
-    // }
+     }
 
     public function configureFields(string $pageName): iterable
     {

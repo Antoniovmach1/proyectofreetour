@@ -24,11 +24,11 @@ class ValoracionType extends AbstractType
                 '5' => 5,
             ],
             'expanded' => true,
-            'multiple' => false,
-            'label' => 'Valoración de la guía',
-            'attr' => [
-                'class' => 'dynamic-rating'
-            ]
+            // 'multiple' => false,
+            // 'label' => 'Valoración de la guía',
+            // 'attr' => [
+            //     'class' => 'dynamic-rating'
+            // ]
         ])
 
         ->add('valoracion_Ruta', ChoiceType::class, [

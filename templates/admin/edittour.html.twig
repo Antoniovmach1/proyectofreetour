@@ -1,0 +1,91 @@
+{% include '@EasyAdmin/page/content.html.twig' %}
+
+<div id="todoitem">
+  <h1>Editando el Tour con ID {{ id }}</h1>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    {# asset{{()}} #}
+
+    <link rel="stylesheet" href="{{asset('plugins/tabs/mapa.css')}}" />
+    <script src="{{asset('plugins/tabs/mapa.js')}}"></script>
+
+    <script type="text/javascript" src="{{asset('plugins/drag/dist/image-uploader.min.js')}}"></script>
+    <script src="{{asset('plugins/drag/imagen.js')}}"></script>
+
+   
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- RichText JS -->
+    <script type="text/javascript" src="{{asset('plugins/RichText/src/jquery.richtext.js')}}"></script>
+
+    <!-- lo mio JS -->
+      <script type="text/javascript" src="{{('js/guia.js')}}"></script>
+
+      <script type="text/javascript" src="{{('js/edittour.js')}}"></script>
+
+
+
+
+    <!-- item -->
+    <script type="text/javascript" src="{{asset('js/item.js')}}"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <div id="tabs" class="container mt-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link active" href="#tabs-1">Todo en Uno</a></li>
+      </ul>
+      <div class="tab-content mt-2">
+        <div id="tabs-1" class="tab-pane active">
+          <div class="page-wrapper box-content">
+
+            <!-- Contenido del primer "tab" -->
+            <div class="row">
+              <div class="col-md-6">
+               <label for="fechaYHora">Fecha y Hora:</label>
+              <input type="datetime-local" id="fechaYHora" name="fechaYHora" required>
+<label id="idtour" style="display: none;">{{ id }}</label>
+               <label for="guiaSelect" class="form-label mb-2">Selecciona un guía:</label>
+        <select class="form-select form-select-sm" id="usuariosSelect" style="width: 500px;"></select>
+
+            <label for="rutasSelect" class="form-label mb-2">Selecciona un guía:</label>
+        <select class="form-select form-select-sm" id="rutasSelect" style="width: 500px;"></select>
+              
+              </div>
+
+            </div>
+
+
+            
+
+            
+
+          </div>
+        </div>
+        <button id="actualizartourButton">Actualizar tour</button>
+      </div>
+    </div>
+
+  </body>
+
+</div>
+
+
+</body>
+</div>

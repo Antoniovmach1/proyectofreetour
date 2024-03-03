@@ -17,14 +17,29 @@
 
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-  {# {% block stylesheets %}
+  {% block stylesheets %}
   {% endblock %}
 
   {% block javascripts %}
   {% block importmap %}{{ importmap('app') }}{% endblock %}
-  {% endblock %} #}
+  {% endblock %}
+</head>
+<header>
 
 
+</header>
+
+<body>
+  {% block body %}
+
+
+
+
+
+
+  <head>
+    <meta charset="utf-8">
+    <title>FREETOUR-AV-HOME</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -44,19 +59,20 @@
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="Styles/home/css/style.css" rel="stylesheet">
-
-  
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <link href="../Styles/home/css/style.css" rel="stylesheet">
 
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+    <link rel="stylesheet" href="{{asset('plugins/tabs/mapa.css')}}" />
+    <script src="{{asset('plugins/tabs/mapaderuta.js')}}"></script>
   </head>
 
-<body>
-  {% block body %}
-
+  <body>
     <!-- Navbar Start -->
     <div class="container-fluid position-relative nav-bar p-0" style="height: 0;">
       <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
@@ -89,7 +105,7 @@
 
 
               <div class="nav-item dropdown">
-                {# <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> {{ app.user.email }}</a> #}
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> {{ app.user.email }}</a>
 
                 <div class="dropdown-menu border-0 rounded-0 m-0">
                   <a href="logout" class="dropdown-item">Cerrar sesion</a>
@@ -126,15 +142,22 @@
     <!-- Navbar End -->
 
 
+
+
+
+
+
+
+
     <!-- Header Start -->
     <div class="container-fluid page-header">
       <div class="container">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
-          <h3 class="display-4 text-white text-uppercase">Tus tours</h3>
+          <h3 class="display-4 text-white text-uppercase">Vloraciones</h3>
           <div class="d-inline-flex text-white">
             <p class="m-0 text-uppercase"><a class="text-white" href="">Home</a></p>
             <i class="fa fa-angle-double-right pt-1 px-3"></i>
-            <p class="m-0 text-uppercase">Tus tours</p>
+            <p class="m-0 text-uppercase">Vloraciones</p>
           </div>
         </div>
       </div>
@@ -159,46 +182,29 @@
       <div class="container pt-5 pb-3">
         <div class="text-center mb-3 pb-3">
           <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;"></h6>
-          <h1>Todos tus Tours</h1>
+          <h1>Valoracion para tour: {{tour.id}} de la ruta: {{tour.ruta.titulo}}</h1>
         </div>
-<p id="idusuario" >{{ app.user.id }}</p>
+        <div class="row">
 
-<div id='calendar'></div>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
- <script type="text/javascript" src="{{('js/calendario.js')}}"></script>
+  
 
+         {{ form_start(form) }}
+                     <input type="submit" value="Reservar" class="btn btn-primary font-weight-semi-bold py-2 px-3">
+         {{ form_end(form) }}
 
-<div class="modal" id="modaldatos" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Información del Evento</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            
-            </div>
-            <div class="modal-footer">
-                <button id="pasarlista" type="button" class="btn btn-secondary" >Pasar lista</button> 
-                <!-- Otros botones del pie del modal si es necesario -->
-            </div>
+         
+{% for flashMessage in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
         </div>
-    </div>
-</div>
 
 
+          <!-- Packages End -->
 
-
-    </div>
-    </div>
-
-    
-    <!-- Packages End -->
-
-    <!-- Footer Start -->
-    {# <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+          <!-- Footer Start -->
+          {# <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
         <div class="row pt-5">
             <div class="col-lg-3 col-md-6 mb-5">
                 <a href="" class="navbar-brand">
@@ -266,33 +272,29 @@
             </div>
         </div>
     </div> #}
-    <!-- Footer End -->
+          <!-- Footer End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+          <!-- Back to Top -->
+          <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+          <!-- JavaScript Libraries -->
+          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+          <script src="lib/easing/easing.min.js"></script>
+          <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+          <script src="lib/tempusdominus/js/moment.min.js"></script>
+          <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+          <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    
-   
+          <!-- Contact Javascript File -->
+          <script src="mail/jqBootstrapValidation.min.js"></script>
+          <script src="mail/contact.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
 
-    {% endblock %}
+          {% endblock %}
   </body>
 
 </html>

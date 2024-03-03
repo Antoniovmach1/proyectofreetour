@@ -6,6 +6,7 @@ use App\Entity\Item;
 use App\Entity\Localidad;
 use App\Entity\Ruta;
 use App\Entity\Tour;
+use App\Entity\Usuario;
 use App\Repository\ItemRepository;
 use App\Repository\RutaRepository;
 use App\Repository\TourRepository;
@@ -117,8 +118,12 @@ class ApiTourController extends AbstractController
         foreach ($tours as $tour) {
             $json[] = [
                 'id' => $tour->getId(),
+                'fecha_inicio' => $tour->getFechaInicio(),
                 'ruta_id' => $tour->getRuta()->getId(),
                 'usuario_id' => $tour->getUsuario()->getId(),
+                'usuario_nombre' => $tour->getUsuario()->getNombre(),
+                'usuario_apellido' => $tour->getUsuario()->getApellidos(),
+                'ruta_nombre' => $tour->getRuta()->getTitulo(),
                
             ];
         }
@@ -145,11 +150,53 @@ class ApiTourController extends AbstractController
                     'fecha_inicio' => $tour->getFechaInicio(),
                     'ruta_id' => $tour->getRuta()->getId(),
                     'usuario_id' => $tour->getUsuario()->getId(),
+                    'ruta_nombre' => $tour->getRuta()->getTitulo(),
                 ];
             }
 
             return new JsonResponse($json, 200, [], false);
 }
+
+
+
+#[Route("/tour/actualizar", name: "actualizartour", methods: ["PUT"])]
+public function actualizartour(Request $request, EntityManagerInterface $em): JsonResponse
+{
+    $data = json_decode($request->getContent(), true);
+
+    $id = $data['id'];
+    $fecha_inicio = $data['fecha_inicio'];
+    $ruta_id = $data['ruta_id'];
+    $usuario_id = $data['usuario_id'];
+
+    $tour = $em->getRepository(Tour::class)->find($id);
+
+    if (!$tour) {
+        return $this->json(['error' => 'Tour no encontrado'], 404);
+    }
+
+    // Actualizar los datos del Tour
+    $tour->setFechaInicio(new \DateTime($fecha_inicio));
+    
+    $ruta = $em->getRepository(Ruta::class)->find($ruta_id);
+    if (!$ruta) {
+        return $this->json(['error' => 'Ruta no encontrada'], 404);
+    }
+    $tour->setRuta($ruta);
+// Actualizar los datos del Usuario
+    $usuario = $em->getRepository(Usuario::class)->find($usuario_id);
+    if (!$usuario) {
+        return $this->json(['error' => 'Usuario no encontrado'], 404);
+    }
+    $tour->setUsuario($usuario);
+
+ 
+    $em->flush();
+
+    return $this->json(['message' => 'Tour '.$id.' actualizado con éxito'], 200);
+}
+
+
 }
 
 

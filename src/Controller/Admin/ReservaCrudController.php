@@ -128,7 +128,8 @@ class ReservaCrudController extends AbstractCrudController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            // Obtener los valores del formulario
+       
+            
             $valoracion_guia = $form->get('valoracion_guia')->getData();
             $valoracion->setValoracionGuia($valoracion_guia);
     

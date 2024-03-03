@@ -14,8 +14,8 @@ class Informe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $foto = null;
+    #[ORM\Column(length: 40, nullable: true)]
+    private ?string $foto = null;
 
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $observaciones = null;
@@ -26,8 +26,10 @@ class Informe
     #[ORM\ManyToOne(inversedBy: 'informes')]
     private ?Tour $Tour = null;
 
-    #[ORM\ManyToOne(inversedBy: 'informes')]
-    private ?Usuario $guia = null;
+    #[ORM\Column]
+    private ?int $presentes = null;
+
+   
 
     public function getId(): ?int
     {
@@ -82,15 +84,17 @@ class Informe
         return $this;
     }
 
-    public function getGuia(): ?Usuario
+    public function getPresentes(): ?int
     {
-        return $this->guia;
+        return $this->presentes;
     }
 
-    public function setGuia(?Usuario $guia): static
+    public function setPresentes(int $presentes): static
     {
-        $this->guia = $guia;
+        $this->presentes = $presentes;
 
         return $this;
     }
+
+   
 }

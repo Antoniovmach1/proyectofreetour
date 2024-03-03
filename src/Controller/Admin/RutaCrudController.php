@@ -36,11 +36,8 @@ class RutaCrudController extends AbstractCrudController
         return $actions
         ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
             return $action->linkToRoute("crearuta", []);
-        })
-        ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
-            return $action->linkToCrudAction('editRedirect');
-
         });
+       
     }
 
 
